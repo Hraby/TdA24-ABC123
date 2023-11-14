@@ -2,16 +2,19 @@ Tour de App 24 - Team ABC123
 
 ## Project setup
 
-First, run the development server:
+Install all dependencies:
+```bash
+npm install
+```
 
+Run dev server locally:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+
+Run DB GUI locally:
+```bash
+npx prisma studio
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

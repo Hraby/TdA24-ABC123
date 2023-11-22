@@ -1,10 +1,19 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
+
+RUN npm install -g sqlite3
+
 COPY package*.json ./
+
 RUN npm install
+
 COPY . .
-ENV PORT=3000
+
+RUN npx prisma generate
+
 EXPOSE 3000
-ENV ENV=prod
-CMD npm run dev
+
+ENV DATABASE_URL=sqlite:./prisma/dev.db
+
+CMD ["npm", "run", "dev"]

@@ -3,6 +3,10 @@
 scripts
 *Dockerfile*
 node_modules
+.DS_Store
+.github
+*.log
+*.md
 .env
-.next
+.idea
 README.md

@@ -12,6 +12,4 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-ENV DATABASE_URL=""
-
 CMD ["npm", "run", "dev"]

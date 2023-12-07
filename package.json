@@ -4,25 +4,33 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx ./prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^5.6.0",
     "next": "14.0.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tsx": "^4.5.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@prisma/client": "^5.6.0",
-    "@types/node": "^20.9.0",
+    "@types/node": "^20.10.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.7",
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
     "prisma": "^5.6.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "description": "",
   "main": "next.config.js",
@@ -34,7 +42,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hraby/TdA24-ABC123/issues"
+    "url": "https://github.com/Hra by/TdA24-ABC123/issues"
   },
   "homepage": "https://github.com/Hraby/TdA24-ABC123#readme"
 }

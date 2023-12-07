@@ -53,8 +53,40 @@ export async function addLecturer(lecturerData: LecturerCreateInput) {
             },
         },
         include: {
-            tags: true,
-            contact: true,
+            tags: {
+                select: {
+                    uuid: true,
+                    name: true,
+                },
+            },
+            contact: {
+                select: {
+                    emails: true,
+                    telephone_numbers: true
+                }
+            },
         },
     });
+}
+
+export async function getLecturer(uuid: string){
+    return await prisma.lecturer.findUnique({
+        where: {
+          uuid: uuid,
+        },
+        include: {
+            tags: {
+                select: {
+                    uuid: true,
+                    name: true,
+                },
+            },
+            contact: {
+                select: {
+                    emails: true,
+                    telephone_numbers: true
+                }
+            },
+        },
+      })
 }

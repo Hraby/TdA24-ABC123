@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -11,7 +9,7 @@ datasource db {
 }
 
 model Lecturer {
-  uuid           String         @id @default(uuid())
+  uuid           String         @id @unique @default(uuid())
   title_before   String?
   first_name     String
   middle_name    String?
@@ -22,19 +20,18 @@ model Lecturer {
   claim          String?
   bio            String?
   price_per_hour Int?
-  tags           Tag[]          @relation("Lecturer_tags_tag_id_fkey")
+  tags           Tag[]          @relation("tag")
   contact        Contact_info[]
 }
 
 model Tag {
-  uuid         String    @id @default(uuid())
-  name         String    @unique
-  Lecturer     Lecturer? @relation("Lecturer_tags_tag_id_fkey", fields: [lecturerUuid], references: [uuid])
-  lecturerUuid String
+  uuid      String     @id @unique @default(uuid())
+  name      String     @unique
+  lecturers Lecturer[] @relation("tag")
 }
 
 model Contact_info {
-  id                Int      @id @default(autoincrement())
+  id                Int      @id @unique @default(autoincrement())
   lecturer          Lecturer @relation(fields: [lecturerUuid], references: [uuid])
   telephone_numbers String[]
   emails            String[]

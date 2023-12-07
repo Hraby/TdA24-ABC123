@@ -8,10 +8,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
-
-COPY .next ./.next
+RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["/app/start.sh"]
+CMD ["npm", "run", "dev"]

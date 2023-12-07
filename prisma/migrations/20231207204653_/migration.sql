@@ -19,7 +19,6 @@ CREATE TABLE "Lecturer" (
 CREATE TABLE "Tag" (
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "lecturerUuid" TEXT,
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("uuid")
 );
@@ -34,8 +33,35 @@ CREATE TABLE "Contact_info" (
     CONSTRAINT "Contact_info_pkey" PRIMARY KEY ("id")
 );
 
--- AddForeignKey
-ALTER TABLE "Tag" ADD CONSTRAINT "Tag_lecturerUuid_fkey" FOREIGN KEY ("lecturerUuid") REFERENCES "Lecturer"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE "_tag" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Lecturer_uuid_key" ON "Lecturer"("uuid");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_uuid_key" ON "Tag"("uuid");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Contact_info_id_key" ON "Contact_info"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_tag_AB_unique" ON "_tag"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_tag_B_index" ON "_tag"("B");
 
 -- AddForeignKey
 ALTER TABLE "Contact_info" ADD CONSTRAINT "Contact_info_lecturerUuid_fkey" FOREIGN KEY ("lecturerUuid") REFERENCES "Lecturer"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_tag" ADD CONSTRAINT "_tag_A_fkey" FOREIGN KEY ("A") REFERENCES "Lecturer"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_tag" ADD CONSTRAINT "_tag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;

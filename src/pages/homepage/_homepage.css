@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
 * {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -32,6 +34,7 @@ nav a {
     text-decoration: none;
     color: white;
     letter-spacing: 1px;
+    font-family: 'Lalezar';
 }
 
 nav a:hover {

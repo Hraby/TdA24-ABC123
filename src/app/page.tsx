@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
-await prisma.$connect()
 
 export default function Home() {
   return (
-    <span>Hello TdA</span>
+      <div>
+        <span>Hello TdA</span>
+      </div>
   )
 }

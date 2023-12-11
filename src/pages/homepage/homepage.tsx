@@ -11,6 +11,9 @@ export default function Homepage() {
                     <li><a href="#kontakt">KONTAKT</a></li>
                 </ul>
             </nav>
+
+            <h1>NAŠI LEKTOŘI</h1>
+
         </div>
     )
 }

@@ -1,0 +1,12 @@
+.git
+.results
+scripts
+*Dockerfile*
+node_modules
+.DS_Store
+.github
+*.log
+*.md
+.env
+.idea
+README.md

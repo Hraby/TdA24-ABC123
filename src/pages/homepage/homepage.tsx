@@ -17,7 +17,7 @@ export default function Homepage() {
 
                 <div id="obdelnik">
                     <div className="uvodni_text">
-                        <h1>ŠPIČKOVÝd</h1>
+                        <h1>ŠPIČKOVÝ</h1>
                         <h1>UČITELÉ</h1>
                         <h1>NA DOSAH</h1>
                     </div>

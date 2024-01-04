@@ -2,26 +2,40 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-export async function getLecturers() {
-    return await prisma.lecturer.findMany({
-        include: {
-            tags: {
-                select: {
-                    uuid: true,
-                    name: true,
-                },
-            },
-            contact: {
-                select: {
-                    telephone_numbers: true,
-                    emails: true,
-                },
-            },
-        },
-    });
-}
 
-export async function addLecturer(lecturerData: LecturerCreateInput) {
+export async function getLecturers() {
+    const lecturers = await prisma.lecturer.findMany({
+      include: {
+        tags: {
+          select: {
+            uuid: true,
+            name: true,
+          },
+        },
+        contact: {
+          select: {
+            telephone_numbers: true,
+            emails: true,
+          },
+        },
+      }
+    });
+
+    return lecturers.map((lecturer) => ({
+      ...lecturer,
+      contact: {
+        ...lecturer.contact,
+        telephone_numbers: lecturer?.contact?.telephone_numbers
+          ? lecturer.contact.telephone_numbers.split(',').map(phone => phone.trim())
+          : [],
+        emails: lecturer?.contact?.emails
+          ? lecturer.contact.emails.split(',').map(email => email.trim())
+          : []
+      },
+    }));
+  }
+
+export async function addLecturer(lecturerData: Lecturers) {
     return await prisma.lecturer.create({
         data: {
             uuid: lecturerData.uuid,
@@ -44,10 +58,14 @@ export async function addLecturer(lecturerData: LecturerCreateInput) {
             contact: {
                 create: {
                     telephone_numbers: {
-                        set: lecturerData.contact?.telephone_numbers || [],
+                        create: lecturerData.contact?.telephone_numbers.map((number) => ({
+                            number: number.number,
+                        })) || [],
                     },
                     emails: {
-                        set: lecturerData.contact?.emails || [],
+                        create: lecturerData.contact?.emails.map((email) => ({
+                            email: email.email,
+                        })) || [],
                     },
                 },
             },
@@ -63,7 +81,7 @@ export async function addLecturer(lecturerData: LecturerCreateInput) {
                 select: {
                     emails: true,
                     telephone_numbers: true
-                }
+                },
             },
         },
     });
@@ -78,14 +96,14 @@ export async function getLecturer(uuid: string){
             tags: {
                 select: {
                     uuid: true,
-                    name: true,
+                    name: true
                 },
             },
             contact: {
                 select: {
                     emails: true,
                     telephone_numbers: true
-                }
+                },
             },
         },
       })

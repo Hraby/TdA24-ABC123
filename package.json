@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "next build",
     "start": "next start",
+    "start:migrate:prod": "node server.js",
     "lint": "next lint",
-    "seed": "tsx ./prisma/seed.ts"
+    "docker:dev": "prisma generate && prisma migrate dev && tsx ./prisma/seed.ts && npm run dev",
+    "docker:compose:dev": "docker-compose down && docker compose up -d --build",
+    "docker:compose:prod": "docker-compose down && docker compose -f docker-compose.prod.yml up -d --build"
   },
   "prisma": {
     "seed": "tsx ./prisma/seed.ts"
@@ -42,7 +45,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hra by/TdA24-ABC123/issues"
+    "url": "https://github.com/Hraby/TdA24-ABC123/issues"
   },
   "homepage": "https://github.com/Hraby/TdA24-ABC123#readme"
 }

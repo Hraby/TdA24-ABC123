@@ -1,15 +1,15 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Lecturer {
-  uuid           String         @id @unique @default(uuid())
+  uuid           String        @id @unique @default(uuid())
   title_before   String?
   first_name     String
   middle_name    String?
@@ -20,20 +20,20 @@ model Lecturer {
   claim          String?
   bio            String?
   price_per_hour Int?
-  tags           Tag[]          @relation("tag")
-  contact        Contact_info[]
+  contact        Contact_info? @relation(fields: [contact_infoId], references: [id])
+  tags           Tag[]         @relation("LecturerTag")
+  contact_infoId Int?
 }
 
 model Tag {
   uuid      String     @id @unique @default(uuid())
   name      String     @unique
-  lecturers Lecturer[] @relation("tag")
+  lecturers Lecturer[] @relation("LecturerTag")
 }
 
 model Contact_info {
-  id                Int      @id @unique @default(autoincrement())
-  lecturer          Lecturer @relation(fields: [lecturerUuid], references: [uuid])
-  telephone_numbers String[]
-  emails            String[]
-  lecturerUuid      String
+  id                Int        @id @default(autoincrement())
+  telephone_numbers String
+  emails            String
+  Lecturer          Lecturer[]
 }

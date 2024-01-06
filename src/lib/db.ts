@@ -57,16 +57,8 @@ export async function addLecturer(lecturerData: Lecturers) {
             },
             contact: {
                 create: {
-                    telephone_numbers: {
-                        create: lecturerData.contact?.telephone_numbers.map((number) => ({
-                            number: number.number,
-                        })) || [],
-                    },
-                    emails: {
-                        create: lecturerData.contact?.emails.map((email) => ({
-                            email: email.email,
-                        })) || [],
-                    },
+                    telephone_numbers: lecturerData.contact.telephone_numbers,
+                    emails: lecturerData.contact.emails
                 },
             },
         },
@@ -107,4 +99,21 @@ export async function getLecturer(uuid: string){
             },
         },
       })
+}
+
+export async function delLecturer(uuid: string, contact?: number){
+  if (contact != undefined){
+    await prisma.contact_info.delete({
+      where: {
+        id: contact,
+      },
+    });
+  }
+
+  return await prisma.lecturer.delete({
+    where: {
+      uuid: uuid,
+    }
+  })
+
 }

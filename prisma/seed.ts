@@ -21,12 +21,16 @@ async function main() {
             claim: "Bez dobré prezentace je i nejlepší myšlenka k ničemu.",
             bio: "<b>Formátovaný text</b> s <i>bezpečnými</i> tagy.",
             tags: {
-                create: [
-                    {
+                connectOrCreate: {
+                    create: {
                         uuid: "c20b98dd-f37e-4fa7-aac1-73300abf086e",
                         name: "Marketing",
                     },
-                ],
+                    where: {
+                        uuid: "c20b98dd-f37e-4fa7-aac1-73300abf086e",
+                        name: "Marketing",
+                    },
+                },
             },
             price_per_hour: 720,
             contact: {

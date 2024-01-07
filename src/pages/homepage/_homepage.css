@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Open+Sans:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #15374C;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10%;
+}
+
+nav img {
+    height: 40px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    letter-spacing: 1px;
+    font-family: 'Lalezar';
+}
+
+nav a:hover {
+    text-decoration: none;
+    color: #74C7D3;
+    position: relative;
+}
+
+nav a:hover:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #74C7D3;
+    margin-top: 1px;
+}
+
+nav a.active {
+    text-decoration: none;
+    color: #74C7D3;
+    position: relative;
+}
+
+nav a.active:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #74C7D3;
+    margin-top: 1px;
+}
+
+.hero {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 95vh;
+}
+
+#obdelnik {
+    background-color: #15374C;
+    width: 44%;
+    height: 100%;
+}
+
+#obdelnik .uvodni_text {
+    color: #FFF;
+    font-family: Lalezar;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 10%;
+    margin-left: 25%;
+}
+
+#obdelnik h1 {
+    margin-top: 1px;
+    letter-spacing: 3px;
+}
+
+#obdelnik button {
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 205px;
+    height: 60px;
+    flex-shrink: 0;
+    margin-top: 15%;
+}
+
+#obdelnik #blueButton {
+    color: #15374C;
+    border-radius: 20px;
+    background-color: #74C7D3;
+    margin-left: 25%;
+}
+
+    #obdelnik #blueButton:hover {
+        border-radius: 20px;
+        background-color: white;
+        margin-left: 25%;
+    }
+
+    #obdelnik #blueButton a:hover {
+        color: #74C7D3;
+    }
+
+#obdelnik #outlinedButton {
+    background-color: transparent;
+    color: white;
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+    margin-left: 5%;
+}
+
+    #obdelnik #outlinedButton:hover {
+        background-color: white;
+        border: 2px solid #FFFFFF;
+        border-radius: 20px;
+    }
+
+    #obdelnik #outlinedButton a:hover {
+        color: #15374C;
+    }
+
+#obdelnik h2 {
+    font-family: Lalezar;
+    font-size: 20px;
+    font-style: normal;
+}
+
+#obdelnik #blueButton a {
+    text-decoration: none;
+    color: #15374C;
+}
+
+#obdelnik #outlinedButton a {
+    text-decoration: none;
+    color: white;
+}
+
+#obdelnik .lorem_text {
+    width: 410px;
+    height: 100px;
+    margin-left: 25%;
+    margin-top: 15%;
+}
+
+#obdelnik p {
+    color: #FFF;
+    font-family: Open Sans;
+    font-size: 24px;
+    font-style: normal;
+    line-height: normal;
+    font-weight: lighter;
+}
+
+#ilustracni_img {
+    width: 56%;
+    height: 100%;
+    object-fit: cover;
+}

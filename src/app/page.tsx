@@ -1,10 +1,12 @@
-import { PrismaClient } from "@prisma/client"
+import {PrismaClient} from "@prisma/client"
+import Homepage from "@/pages/homepage/homepage";
 
 const prisma = new PrismaClient()
-await prisma.$connect()
 
 export default function Home() {
-  return (
-    <span>Hello TdA</span>
-  )
+    return (
+        <div>
+            <Homepage></Homepage>
+        </div>
+    )
 }

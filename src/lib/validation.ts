@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 export const addLecturerSchema = z.object({
-    uuid: z.string().uuid().optional(),
     title_before: z.string().optional(),
     first_name: z.string({ required_error: "First name is required!" }).min(3, "Too short").max(50, "Too long"),
     middle_name: z.string().min(3, "Too short").max(50, "Too long").optional(),
@@ -16,7 +15,7 @@ export const addLecturerSchema = z.object({
         name: z.string(),
     })).optional(),
     contact: z.object({
-        telephone_numbers: z.array(z.string()).optional(),
-        emails: z.array(z.string()).optional(),
+        telephone_numbers: z.string(),
+        emails: z.string(),
     }).optional()
 })

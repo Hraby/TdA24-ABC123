@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { getLecturers, addLecturer, getLecturer } from "@/lib/db";
+import { getLecturers, addLecturer} from "@/lib/db";
 import { addLecturerSchema } from "@/lib/validation";
+import { validate } from "uuid";
 
-export async function GET() {
+export async function GET(request: Request) {
   const lecturers = await getLecturers();
   
   return NextResponse.json(lecturers);

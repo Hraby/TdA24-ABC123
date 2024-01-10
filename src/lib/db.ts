@@ -18,7 +18,7 @@ export async function getLecturers() {
         },
       },
     }
-  });
+  })
 
   return lecturers.map((lecturer) => ({
     ...lecturer,
@@ -31,14 +31,10 @@ export async function getLecturers() {
         ? lecturer.contact.emails.split(',').map(email => email.trim())
         : []
     },
-  }));
+  }))
 }
 
 export async function addLecturer(lecturerData: AddLecturer) {
-  if (!lecturerData || !lecturerData.first_name || !lecturerData.last_name) {
-    throw new Error('Firstname and Lastname are required.');
-  }
-
   const data: any = {
     title_before: lecturerData.title_before,
     first_name: lecturerData.first_name,
@@ -56,7 +52,7 @@ export async function addLecturer(lecturerData: AddLecturer) {
         where: { name: tag.name },
       })) || [],
     },
-  };
+  }
 
   if (lecturerData.contact) {
     data.contact = {
@@ -64,7 +60,7 @@ export async function addLecturer(lecturerData: AddLecturer) {
         telephone_numbers: lecturerData.contact.telephone_numbers || [],
         emails: lecturerData.contact.emails || [],
       },
-    };
+    }
   }
 
   return await prisma.lecturer.create({
@@ -82,30 +78,30 @@ export async function addLecturer(lecturerData: AddLecturer) {
         },
       },
     },
-  });
+  })
 }
 
 
 export async function getLecturer(uuid: string){
   return await prisma.lecturer.findUnique({
-      where: {
-        uuid: uuid,
-      },
-      include: {
-          tags: {
-              select: {
-                  uuid: true,
-                  name: true
-              },
-          },
-          contact: {
-              select: {
-                  emails: true,
-                  telephone_numbers: true
-              },
-          },
-      },
-    })
+    where: {
+      uuid: uuid,
+    },
+    include: {
+        tags: {
+            select: {
+                uuid: true,
+                name: true
+            },
+        },
+        contact: {
+            select: {
+                emails: true,
+                telephone_numbers: true
+            },
+        },
+    },
+  })
 }
 
 export async function delLecturer(uuid: string, contact?: number){
@@ -114,7 +110,7 @@ export async function delLecturer(uuid: string, contact?: number){
       where: {
         id: contact,
       },
-    });
+    })
   }
 
   return await prisma.lecturer.delete({
@@ -123,4 +119,22 @@ export async function delLecturer(uuid: string, contact?: number){
     }
   })
 
+}
+
+export async function updateLecturer(data: any, uuid: string){
+  await prisma.lecturer.update({
+    where: {
+      uuid: uuid,
+    },
+    data: {
+      ...data,
+      tags: {
+        connectOrCreate: data.tags?.map((tag: Tag) => ({
+          create: { name: tag.name },
+          where: { name: tag.name }
+        }))
+      },
+    }
+  })
+  return getLecturer(uuid)
 }

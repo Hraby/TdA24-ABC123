@@ -33,7 +33,7 @@ model Tag {
 
 model Contact_info {
   id                Int        @id @default(autoincrement())
-  telephone_numbers String?
-  emails            String?
+  telephone_numbers String
+  emails            String
   Lecturer          Lecturer[]
 }

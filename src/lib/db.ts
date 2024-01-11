@@ -86,8 +86,8 @@ export async function addLecturer(lecturerData: any) {
       },
       contact: {
         select: {
-          emails: true,
           telephone_numbers: true,
+          emails: true,
         },
       },
     },
@@ -110,8 +110,8 @@ export async function getLecturer(uuid: string){
       },
       contact: {
           select: {
+              telephone_numbers: true,
               emails: true,
-              telephone_numbers: true
           },
       },
     },

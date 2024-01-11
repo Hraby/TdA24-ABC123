@@ -26,8 +26,8 @@ export async function contactTransform(data: any) {
     return {
       ...data,
       "contact": {
-        "telephone_numbers": telephoneNumbersString,
         "emails": emailsString,
+        "telephone_numbers": telephoneNumbersString,
       },
     };
   }
@@ -43,7 +43,7 @@ export async function dataTransform(data: any){
     "picture_url": data.picture_url,
     "location": data.location,
     "claim": data.claim,
-    "bio": data.claim,
+    "bio": data.bio,
     "tags": data.tags?.map((tag: Tag) => ({
       "uuid": tag.uuid,
       "name": tag.name 
@@ -51,11 +51,11 @@ export async function dataTransform(data: any){
     "price_per_hour": data.price_per_hour,
     "contact": {
       ...data.contact,
-      "telephone_numbers": data?.contact?.telephone_numbers
-        ? data.contact.telephone_numbers.split(',').map((phone: string) => phone.trim())
-        : [],
       "emails": data?.contact?.emails
         ? data.contact.emails.split(',').map((email: string) => email.trim())
+        : [],
+      "telephone_numbers": data?.contact?.telephone_numbers
+        ? data.contact.telephone_numbers.split(',').map((phone: string) => phone.trim())
         : []
     }
   }

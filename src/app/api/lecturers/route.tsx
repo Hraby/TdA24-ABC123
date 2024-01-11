@@ -6,7 +6,7 @@ import { contactTransform, dataTransform } from "@/utils/db";
 export async function GET(request: Request) {
   const lecturers = await getLecturers();
   
-  return NextResponse.json(lecturers);
+  return Response.json(await lecturers, {status: 200});
 }
 
 export async function POST(request: Request) {
@@ -17,6 +17,7 @@ export async function POST(request: Request) {
   if (!validatedData.success) return NextResponse.json({message: validatedData.error}, {status: 400});
 
   const lecturer = await addLecturer(validatedData.data)
+  const transformedLecturer = await dataTransform(lecturer)
 
-  return NextResponse.json(await dataTransform(lecturer))
+  return Response.json(await transformedLecturer, {status: 200})
 }

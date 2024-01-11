@@ -5,18 +5,18 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request, { params }: { params: { uuid: string } }) {
     const lecturer = await getLecturer(params.uuid)
     if(lecturer == undefined)
-        return NextResponse.json({message: "User not found"}, {status: 404} )
+        return Response.json({message: "User not found"}, {status: 404} )
 
-    return NextResponse.json(await dataTransform(lecturer))
+    return Response.json(await dataTransform(lecturer), {status: 200})
 }
 
 export async function DELETE(request: Request, {params}: {params: {uuid: string}}){
     const lecturerValidate = await getLecturer(params.uuid)
-    if(lecturerValidate == null)
+    if(!lecturerValidate)
         return NextResponse.json({message: "User not found"}, {status: 404} )
 
     await delLecturer(lecturerValidate.uuid, lecturerValidate.contact_infoId != null ? lecturerValidate.contact_infoId : undefined)
-    return new Response(null, {status: 204})
+    return new Response(null, {status: 200})
 }
 
 export async function PUT(request: Request, {params}: {params: {uuid: string}}){
@@ -24,8 +24,8 @@ export async function PUT(request: Request, {params}: {params: {uuid: string}}){
     const transformedData = await contactTransform(data)
     const lecturerValidate = await getLecturer(params.uuid)
     if(lecturerValidate == null)
-        return NextResponse.json({message: "User not found"}, {status: 404} )
+        return Response.json({message: "User not found"}, {status: 404} )
 
     const lecturer = await updateLecturer(transformedData, params.uuid)
-    return NextResponse.json(await dataTransform(lecturer))
+    return Response.json(await dataTransform(lecturer), {status: 200})
 }

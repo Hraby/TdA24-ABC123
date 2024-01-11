@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
 export async function getLecturers() {
-  const lecturers = prisma.$transaction(await prisma.lecturer.findMany({
+  const lecturers = await prisma.lecturer.findMany({
     include: {
       tags: {
         select: {
@@ -18,9 +18,9 @@ export async function getLecturers() {
         },
       },
     }
-  }))
+  })
 
-  return lecturers.map((lecturer) => ({
+  return lecturers.map((lecturer: Lecturer) => ({
     ...lecturer,
     contact: {
       ...lecturer.contact,
@@ -30,7 +30,7 @@ export async function getLecturers() {
       emails: lecturer?.contact?.emails
         ? lecturer.contact.emails.split(',').map(email => email.trim())
         : []
-    },
+    }
   }))
 }
 
@@ -63,7 +63,7 @@ export async function addLecturer(lecturerData: AddLecturer) {
     }
   }
 
-  return await prisma.$transaction(prisma.lecturer.create({
+  const lecturer: Lecturer = await prisma.lecturer.create({
     data,
     include: {
       tags: {
@@ -78,12 +78,14 @@ export async function addLecturer(lecturerData: AddLecturer) {
         },
       },
     },
-  }))
+  })
+
+  return await lecturer
 }
 
 
 export async function getLecturer(uuid: string){
-  return await prisma.$transaction(prisma.lecturer.findUnique({
+  const lecturers = await prisma.lecturer.findUnique({
     where: {
       uuid: uuid,
     },
@@ -101,28 +103,31 @@ export async function getLecturer(uuid: string){
             },
         },
     },
-  }))
+  })
+
+  return await lecturers
 }
 
 export async function delLecturer(uuid: string, contact?: number){
   if (contact != undefined){
-    await prisma.$transaction(prisma.contact_info.delete({
+    const contactInfo = await prisma.contact_info.delete({
       where: {
         id: contact,
       },
-    }))
+    })
   }
 
-  return await prisma.$transaction(prisma.lecturer.delete({
+  const lecturer = await prisma.lecturer.delete({
     where: {
       uuid: uuid,
     }
-  }))
+  })
 
+  return await lecturer;
 }
 
 export async function updateLecturer(data: any, uuid: string){
-  await prisma.$transaction(prisma.lecturer.update({
+  const lecturer = await prisma.lecturer.update({
     where: {
       uuid: uuid,
     },
@@ -135,6 +140,6 @@ export async function updateLecturer(data: any, uuid: string){
         }))
       },
     }
-  }))
-  return getLecturer(uuid)
+  })
+  return await getLecturer(uuid)
 }

@@ -19,9 +19,9 @@ model Lecturer {
   location       String?
   claim          String?
   bio            String?
+  tags           Tag[]         @relation("LecturerTag")
   price_per_hour Int?
   contact        Contact_info? @relation(fields: [contact_infoId], references: [id])
-  tags           Tag[]         @relation("LecturerTag")
   contact_infoId Int?
 }
 

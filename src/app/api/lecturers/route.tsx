@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getLecturers, addLecturer} from "@/lib/db";
 import { addLecturerSchema } from "@/lib/validation";
-import { contactTransform } from "@/utils/db";
+import { contactTransform, dataTransform } from "@/utils/db";
 
 export async function GET(request: Request) {
   const lecturers = await getLecturers();
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   
   if (!validatedData.success) return NextResponse.json({message: validatedData.error}, {status: 400});
 
-  const lecturer = await addLecturer(validatedData.data);
+  const lecturer = await addLecturer(validatedData.data)
 
-  return NextResponse.json(lecturer);
+  return NextResponse.json(await dataTransform(lecturer))
 }

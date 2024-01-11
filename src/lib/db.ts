@@ -1,23 +1,35 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 export async function getLecturers() {
   const lecturers = await prisma.lecturer.findMany({
-    include: {
+    select: {
+      uuid: true,
+      title_before: true,
+      first_name: true,
+      middle_name: true,
+      last_name: true,
+      title_after: true,
+      picture_url: true,
+      location: true,
+      claim: true,
+      bio: true,
+      contact_infoId: false,
       tags: {
         select: {
           uuid: true,
           name: true,
         },
       },
+      price_per_hour: true,
       contact: {
         select: {
           telephone_numbers: true,
           emails: true,
         },
       },
-    }
+    },
   })
 
   return lecturers.map((lecturer) => ({
@@ -34,7 +46,7 @@ export async function getLecturers() {
   }))
 }
 
-export async function addLecturer(lecturerData: AddLecturer) {
+export async function addLecturer(lecturerData: any) {
   const data: any = {
     title_before: lecturerData.title_before,
     first_name: lecturerData.first_name,
@@ -47,7 +59,7 @@ export async function addLecturer(lecturerData: AddLecturer) {
     bio: lecturerData.bio,
     price_per_hour: lecturerData.price_per_hour,
     tags: {
-      connectOrCreate: lecturerData.tags?.map((tag) => ({
+      connectOrCreate: lecturerData.tags?.map((tag: Tag) => ({
         create: { name: tag.name },
         where: { name: tag.name },
       })) || [],
@@ -63,11 +75,12 @@ export async function addLecturer(lecturerData: AddLecturer) {
     }
   }
 
-  return await prisma.lecturer.create({
+  const lecturer = await prisma.lecturer.create({
     data,
     include: {
       tags: {
         select: {
+          uuid: true,
           name: true,
         },
       },
@@ -79,29 +92,32 @@ export async function addLecturer(lecturerData: AddLecturer) {
       },
     },
   })
+  return await lecturer
 }
 
 
 export async function getLecturer(uuid: string){
-  return await prisma.lecturer.findUnique({
+  const lecturer = await prisma.lecturer.findUnique({
     where: {
       uuid: uuid,
     },
     include: {
-        tags: {
-            select: {
-                uuid: true,
-                name: true
-            },
-        },
-        contact: {
-            select: {
-                emails: true,
-                telephone_numbers: true
-            },
-        },
+      tags: {
+          select: {
+              uuid: true,
+              name: true
+          },
+      },
+      contact: {
+          select: {
+              emails: true,
+              telephone_numbers: true
+          },
+      },
     },
   })
+
+  return await lecturer
 }
 
 export async function delLecturer(uuid: string, contact?: number){
@@ -113,12 +129,13 @@ export async function delLecturer(uuid: string, contact?: number){
     })
   }
 
-  return await prisma.lecturer.delete({
+  const lecturer = await prisma.lecturer.delete({
     where: {
       uuid: uuid,
     }
   })
 
+  return await lecturer
 }
 
 export async function updateLecturer(data: any, uuid: string){
@@ -136,5 +153,5 @@ export async function updateLecturer(data: any, uuid: string){
       },
     }
   })
-  return getLecturer(uuid)
+  return await getLecturer(uuid)
 }

@@ -1,12 +1,13 @@
 import { getLecturer, delLecturer, updateLecturer } from "@/lib/db";
-import { contactTransform } from "@/utils/db";
+import { contactTransform, dataTransform } from "@/utils/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }: { params: { uuid: string } }) {
     const lecturer = await getLecturer(params.uuid)
     if(lecturer == undefined)
         return NextResponse.json({message: "User not found"}, {status: 404} )
-    return NextResponse.json(lecturer)
+
+    return NextResponse.json(await dataTransform(lecturer))
 }
 
 export async function DELETE(request: Request, {params}: {params: {uuid: string}}){
@@ -26,5 +27,5 @@ export async function PUT(request: Request, {params}: {params: {uuid: string}}){
         return NextResponse.json({message: "User not found"}, {status: 404} )
 
     const lecturer = await updateLecturer(transformedData, params.uuid)
-    return NextResponse.json(lecturer)
+    return NextResponse.json(await dataTransform(lecturer))
 }

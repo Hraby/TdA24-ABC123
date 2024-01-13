@@ -6,8 +6,8 @@ export default function Homepage() {
             <nav>
                 <img src="TeacherDigitalAgency_LOGO_colour-white.png" alt="Logo TDA"></img>
                 <ul>
-                    <li><a href="#domu" className="active">DOMŮ</a></li>
-                    <li><a href="#nasi-lektori">NAŠI LEKTOŘI</a></li>
+                    <li><a href="#" className="active">DOMŮ</a></li>
+                    <li><a href="/lecturer">NAŠI LEKTOŘI</a></li>
                     <li><a href="#o-nas">O NÁS</a></li>
                     <li><a href="#kontakt">KONTAKT</a></li>
                 </ul>
@@ -22,7 +22,7 @@ export default function Homepage() {
                         <h1>NA DOSAH</h1>
                     </div>
 
-                    <button id="blueButton"><h2><a href="#">NABÍDKA LEKTORŮ</a></h2></button>
+                    <button id="blueButton"><h2><a href="/lecturer">NABÍDKA LEKTORŮ</a></h2></button>
                     <button id="outlinedButton"><h2><a href="#">NÁŠ PŘÍBĚH</a></h2></button>
 
                     <div className="lorem_text">

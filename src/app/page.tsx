@@ -1,6 +1,5 @@
 import {PrismaClient} from "@prisma/client"
 import Homepage from "@/pages/homepage/homepage";
-import Lektori from "@/pages/lektori/lektori";
 
 const prisma = new PrismaClient()
 

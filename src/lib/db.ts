@@ -50,6 +50,7 @@ export async function getLecturers() {
 
 export async function addLecturer(lecturerData: any) {
   const data: any = {
+    uuid: lecturerData.uuid,
     title_before: lecturerData.title_before,
     first_name: lecturerData.first_name,
     middle_name: lecturerData.middle_name,

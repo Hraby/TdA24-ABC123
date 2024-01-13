@@ -37,9 +37,9 @@ yarn-error.log*
 next-env.d.ts
 
 # python
-./test/
-./venv/
-./.pytest_cache/
+/test/
+/venv/
+/.pytest_cache/
 
 # idea
-./.idea/
+/.idea/

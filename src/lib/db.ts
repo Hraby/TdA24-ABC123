@@ -32,7 +32,7 @@ export async function getLecturers() {
     },
   })
 
-  return lecturers.map((lecturer) => ({
+  const lecturersFormated = lecturers.map((lecturer) => ({
     ...lecturer,
     contact: {
       ...lecturer.contact,
@@ -44,6 +44,8 @@ export async function getLecturers() {
         : []
     },
   }))
+
+  return lecturersFormated
 }
 
 export async function addLecturer(lecturerData: any) {
@@ -62,7 +64,7 @@ export async function addLecturer(lecturerData: any) {
       connectOrCreate: lecturerData.tags?.map((tag: Tag) => ({
         create: { name: tag.name },
         where: { name: tag.name },
-      })) || [],
+      })),
     },
   }
 
@@ -92,7 +94,8 @@ export async function addLecturer(lecturerData: any) {
       },
     },
   })
-  return await lecturer
+
+  return lecturer
 }
 
 
@@ -117,7 +120,7 @@ export async function getLecturer(uuid: string){
     },
   })
 
-  return await lecturer
+  return lecturer
 }
 
 export async function delLecturer(uuid: string, contact?: number){
@@ -135,7 +138,7 @@ export async function delLecturer(uuid: string, contact?: number){
     }
   })
 
-  return await lecturer
+  return lecturer
 }
 
 export async function updateLecturer(data: any, uuid: string){
@@ -153,5 +156,6 @@ export async function updateLecturer(data: any, uuid: string){
       },
     }
   })
-  return await getLecturer(uuid)
+  const updatedLecturer =  await getLecturer(uuid)
+  return updatedLecturer
 }

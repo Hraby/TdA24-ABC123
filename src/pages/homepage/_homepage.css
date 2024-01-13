@@ -87,7 +87,7 @@ nav a.active:after {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    padding-top: 10%;
+    padding-top: 15%;
     margin-left: 25%;
 }
 
@@ -105,7 +105,7 @@ nav a.active:after {
     width: 205px;
     height: 60px;
     flex-shrink: 0;
-    margin-top: 15%;
+    margin-top: 5%;
 }
 
 #obdelnik #blueButton {
@@ -163,7 +163,7 @@ nav a.active:after {
     width: 410px;
     height: 100px;
     margin-left: 25%;
-    margin-top: 15%;
+    margin-top: 5%;
 }
 
 #obdelnik p {

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Open+Sans:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #15374C;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10%;
+}
+
+nav img {
+    height: 40px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    letter-spacing: 1px;
+    font-family: 'Lalezar';
+}
+
+nav a:hover {
+    text-decoration: none;
+    color: #74C7D3;
+    position: relative;
+}
+
+nav a:hover:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #74C7D3;
+    margin-top: 1px;
+}
+
+nav a.active {
+    text-decoration: none;
+    color: #74C7D3;
+    position: relative;
+}
+
+nav a.active:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #74C7D3;
+    margin-top: 1px;
+}

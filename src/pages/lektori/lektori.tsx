@@ -19,24 +19,24 @@ export default function Lektori() {
 
             <div className="container">
                 <div className="teacher-info">
-                    <img src="https://img.freepik.com/free-photo/medium-shot-woman-teaching-lesson_23-2149272233.jpg" alt="Učitel obrázek"></img>
+                    <img src="https://tourdeapp.cz/storage/images/2023_02_25/412ff296a291f021bbb6de10e8d0b94863fa89308843b/big.png.webp" alt="Učitel obrázek"></img>
                         <h2>Mgr. Petra Swil Plachá MBA </h2>
                 </div>
 
                 <div className="contact-details">
                     <div className="contact-column">
                         <img className="contact-icon" src="adress-icon.png" alt="Adresa ikona"></img>
-                            <p>Ulice 123, Město</p>
+                            <p>Brno</p>
                     </div>
 
                     <div className="contact-column">
                         <img className="contact-icon" src="email-icon.png" alt="Email ikona"></img>
-                            <p>ucitel@email.com</p>
+                            <p>placha@scg.cz, predseda@scg.cz</p>
                     </div>
 
                     <div className="contact-column">
                         <img className="contact-icon" src="phone-icon.png" alt="Telefon ikona"></img>
-                            <p>+123 456 789</p>
+                            <p>+420 722 482 974</p>
                     </div>
                 </div>
             </div>

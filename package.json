@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx ./prisma/seed.ts"
@@ -44,7 +44,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Hra by/TdA24-ABC123/issues"
+    "url": "https://github.com/Hraby/TdA24-ABC123/issues"
   },
   "homepage": "https://github.com/Hraby/TdA24-ABC123#readme"
 }

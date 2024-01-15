@@ -2,8 +2,9 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+
 async function main() {
-    const lecturer = await prisma.lecturer.upsert({
+    await prisma.lecturer.upsert({
         where: {
             uuid: "67fda282-2bca-41ef-9caf-039cc5c8dd69"
         },
@@ -20,23 +21,26 @@ async function main() {
             claim: "Bez dobré prezentace je i nejlepší myšlenka k ničemu.",
             bio: "<b>Formátovaný text</b> s <i>bezpečnými</i> tagy.",
             tags: {
-                create: [
-                    {
+                connectOrCreate: {
+                    create: {
                         uuid: "c20b98dd-f37e-4fa7-aac1-73300abf086e",
                         name: "Marketing",
                     },
-                ],
+                    where: {
+                        uuid: "c20b98dd-f37e-4fa7-aac1-73300abf086e",
+                        name: "Marketing",
+                    },
+                },
             },
             price_per_hour: 720,
             contact: {
                 create: {
-                    telephone_numbers: ["+123 777 338 111"],
-                    emails: ["user@example.com"],
+                  telephone_numbers: "+123 777 338 111",
+                  emails: "user@example.com"
                 },
-            },
+            },              
         },
     })
-    console.log(lecturer)
 }
 
 main()

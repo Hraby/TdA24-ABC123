@@ -66,3 +66,118 @@ nav a.active:after {
     background: #74C7D3;
     margin-top: 1px;
 }
+
+.container {
+    margin-top: 2%;
+    margin-bottom: auto;
+    display: flex;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.teacher-tag {
+    color: #74C7D3;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.teacher-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teacher-info h2 {
+    color: #15374C;
+    text-align: center;
+    font-family: Lalezar;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 3%;
+}
+
+.teacher-info img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.contact-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+}
+
+.contact-column {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.contact-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.text-block {
+    margin-top: 20px;
+    clear: both;
+    position: absolute;
+    color: #15374C;
+    text-align: center;
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: normal;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    gap: 40px;
+    flex-shrink: 0;
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
+.columns-block {
+    display: flex;
+    justify-content: center;
+    gap: 40%;
+    margin-top: 10px;
+}
+
+.columns-text {
+    display: flex;
+    align-items: center;
+    margin-top: 3%;
+}
+
+.columns-text img {
+    margin-right: 30px;
+    width: 15px;
+    height: 15px;
+}
+
+.columns-block > div {
+    text-align: left;
+}
+
+.columns-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.columns-block li {
+    font-family: "Open Sans";
+    font-size: medium;
+}

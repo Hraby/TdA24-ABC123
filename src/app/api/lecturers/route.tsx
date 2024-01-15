@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLecturers, addLecturer} from "@/lib/db";
-import { addLecturerSchema } from "@/lib/validation";
+// import { addLecturerSchema } from "@/lib/validation";
 import { contactTransform, dataTransform } from "@/utils/db";
 
 export async function GET(request: Request) {

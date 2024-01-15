@@ -24,8 +24,8 @@ CREATE TABLE "Tag" (
 -- CreateTable
 CREATE TABLE "Contact_info" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "telephone_numbers" TEXT NOT NULL,
-    "emails" TEXT NOT NULL
+    "telephone_numbers" TEXT,
+    "emails" TEXT
 );
 
 -- CreateTable

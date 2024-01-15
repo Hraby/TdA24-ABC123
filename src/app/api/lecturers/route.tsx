@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json();
-  if (!data.first_name || !data.last_name) return NextResponse.json({message: "First name and last name are required"}, {status: 400});
+  if (!data.first_name || !data.last_name || data.first_name == null || data.last_name == null) return NextResponse.json({message: "First name and last name are required"}, {status: 400});
   const transformedData = await contactTransform(data);
   // const validatedData = addLecturerSchema.safeParse(transformedData);
 

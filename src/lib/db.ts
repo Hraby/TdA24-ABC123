@@ -143,6 +143,13 @@ export async function delLecturer(uuid: string, contact?: number){
 }
 
 export async function updateLecturer(data: any, uuid: string){
+  const lecturer =  await getLecturer(uuid)
+  data.contact = {
+    create: {
+      telephone_numbers: data.contact.telephone_numbers ? data.contact.telephone_numbers : lecturer?.contact?.telephone_numbers,
+      emails: data.contact.emails ? data.contact.emails : lecturer?.contact?.telephone_numbers,
+    },
+  }
   await prisma.lecturer.update({
     where: {
       uuid: uuid,
@@ -155,6 +162,10 @@ export async function updateLecturer(data: any, uuid: string){
           where: { name: tag.name }
         }))
       },
+    },
+    include: {
+      tags: true,
+      contact: true,
     }
   })
   const updatedLecturer =  await getLecturer(uuid)

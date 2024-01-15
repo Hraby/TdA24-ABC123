@@ -11,12 +11,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json();
+  if (!data.first_name || !data.last_name) return NextResponse.json({message: "First name and last name are required"}, {status: 400});
   const transformedData = await contactTransform(data);
-  const validatedData = addLecturerSchema.safeParse(transformedData);
-  
-  if (!validatedData.success) return NextResponse.json({message: validatedData.error}, {status: 400});
+  // const validatedData = addLecturerSchema.safeParse(transformedData);
 
-  const lecturer = await addLecturer(validatedData.data)
+  const lecturer = await addLecturer(transformedData)
   const transformedLecturer = await dataTransform(lecturer)
 
   return NextResponse.json(transformedLecturer, {status: 200})

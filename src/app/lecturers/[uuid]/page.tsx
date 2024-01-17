@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar/navbar";
 import Lecturer from "@/components/lecturer/lecturer";
-import { notFound } from "next/navigation";
+import { Footer } from "@/components/footer/footer";
 
 export async function generateStaticParams(){
   let url = "http://localhost:3000/api/lecturers/"
@@ -29,8 +29,15 @@ export default async function Page({ params }: any ) {
 
     return (
       <>
-        <Navbar />
-        <Lecturer data={lecturer}/>
+        <div className="section">
+          <Navbar />
+        </div>
+        <div className="section">
+          <Lecturer data={lecturer}/>
+        </div>
+        <div className="section">
+          <Footer/>
+        </div>
       </>
     )
 }

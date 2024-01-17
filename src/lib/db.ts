@@ -146,10 +146,27 @@ export async function updateLecturer(data: any, uuid: string){
   const lecturer =  await getLecturer(uuid)
   data.contact = {
     create: {
-      telephone_numbers: data.contact.telephone_numbers ? data.contact.telephone_numbers : lecturer?.contact?.telephone_numbers,
-      emails: data.contact.emails ? data.contact.emails : lecturer?.contact?.telephone_numbers,
+      telephone_numbers: data.contact?.telephone_numbers || lecturer?.contact?.telephone_numbers,
+      emails: data.contact?.emails || lecturer?.contact?.emails,
     },
   }
+
+  if(lecturer?.tags && data.tags){
+    await prisma.lecturer.update({
+      where: {
+        uuid: uuid,
+      },
+      data: {
+        tags: {
+          set: []
+        },
+      },
+      include: {
+        tags: true,
+      }
+    })
+  }
+
   await prisma.lecturer.update({
     where: {
       uuid: uuid,

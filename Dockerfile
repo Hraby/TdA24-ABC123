@@ -29,6 +29,9 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/start.sh .
 
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
 EXPOSE 3000
 
 ENV PORT 3000

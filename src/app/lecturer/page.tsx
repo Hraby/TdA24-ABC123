@@ -1,11 +1,10 @@
-import {PrismaClient} from "@prisma/client"
 import Lektori from "@/pages/lektori/lektori";
-
-const prisma = new PrismaClient()
+import {Navbar} from "@/components/navbar/navbar";
 
 export default function Lecturer() {
     return (
         <div>
+            <Navbar/>
             <Lektori></Lektori>
         </div>
     )

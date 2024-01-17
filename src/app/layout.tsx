@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
-import { Manrope } from 'next/font/google'
-
-const manrope = Manrope({ subsets: ['latin'] })
+import {open_sans, lalezar} from "./fonts"
 
 export const metadata: Metadata = {
-  title: 'TdA24 ABC123'
+  title: 'Špičkový učitelé na dosah - Teacher digital Agency'
 }
 
 export default function RootLayout({
@@ -14,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={manrope.className}>{children}</body>
+      <body className={`${open_sans.className} ${lalezar.className}`} style={{scrollBehavior:'smooth'}}>{children}</body>
     </html>
   )
 }

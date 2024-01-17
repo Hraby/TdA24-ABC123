@@ -1,6 +1,8 @@
-import './lecturer.css';
-
-export async function Lecturer({data}: {data: Lecturer}) {
+import { notFound } from "next/navigation"
+import "./lecturer.css"
+  
+export default function Lecturer({ data }: { data: any }){
+    if (!data.first_name) return notFound()
 
     return (
         <>
@@ -39,7 +41,7 @@ export async function Lecturer({data}: {data: Lecturer}) {
                     <div>
                         <ul>
                             {data.tags &&
-                                data.tags.map((tag) => (
+                                data.tags.map((tag: Tag) => (
                                     <div key={tag.uuid} className="columns-text">
                                         <img className="check-icon" src="/check-icon.png" alt="Check ikona"></img>
                                         <li>{tag.name}</li>
@@ -52,4 +54,5 @@ export async function Lecturer({data}: {data: Lecturer}) {
             </div>
         </>
     )
-}
+  }
+  

@@ -1,6 +1,6 @@
-import Lektor from "@/pages/lektor/lektor";
-import {Navbar} from "@/components/navbar/navbar";
-import {Footer} from "@/components/footer/footer"
+import { Footer } from "@/components/footer/footer";
+import { Navbar } from "@/components/navbar/navbar";
+
 
 export default function Lecturer() {
     return (
@@ -9,7 +9,7 @@ export default function Lecturer() {
                 <Navbar/>
             </div>
             <div className="section">
-                <Lektor/>
+                
             </div>
             <div className="section">
                 <Footer/>

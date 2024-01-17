@@ -1,10 +1,13 @@
 nav {
-    background-color: #15374C;
-    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 10%;
+    padding: 0 25px;
+    width: 1200px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 0px 0px 15px 15px;
+    background: linear-gradient(90deg, #00384D 0%, #1D4C69 100%);
 }
 
 nav img {
@@ -25,8 +28,13 @@ nav li {
 nav li a {
     text-decoration: none;
     color: white;
-    letter-spacing: 1px;
-    font-family: 'Lalezar';
+    gap: 25px;
+    color: #FFF;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 nav li a:hover {

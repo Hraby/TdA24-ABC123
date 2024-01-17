@@ -31,6 +31,6 @@ export async function PUT(request: Request, {params}: {params: {uuid: string}}){
 
     const lecturer = await updateLecturer(transformedData, params.uuid)
     const formatedLecturer = await dataTransform(lecturer)
-    console.log(formatedLecturer)
+
     return NextResponse.json(formatedLecturer, {status: 200})
 }

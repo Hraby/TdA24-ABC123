@@ -1,0 +1,95 @@
+.lecturers-cards{
+    display: flex;
+    gap: 65px;
+}
+
+.lecturer-card{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 250px;
+    padding: 50px 0;
+}
+
+.lecturer-card img{
+    width: 250px;
+    height: 250px;
+    border-radius: 15px 15px 0 0;
+}
+
+.lecturer-location{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: max-content;
+    padding: 0 20px;
+    border-radius: 15px;
+    background: #15374C;
+    color: #74C7D3;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-info h3{
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-info span{
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-card p{
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-tags{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-tags img{
+    width: 20px;
+    height: 20px;
+}
+
+.lecturer-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 225px;
+    height: 55px;
+    border-radius: 15px;
+    background: #74C7D3;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

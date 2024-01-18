@@ -40,13 +40,10 @@ export async function Tags(){
                         <h3>{lecturer.title_before} {lecturer.first_name} {lecturer.middle_name} {lecturer.last_name} {lecturer.title_after}</h3>
                         <span>Kč{lecturer.price_per_hour}/h</span>
                     </div>
-                    <p>{lecturer.bio}</p>
+                    <p dangerouslySetInnerHTML={{ __html: lecturer.bio }}></p>
                     <div className="lecturer-tags">
                         <img src="/Group-22.png"/>
-                        {lecturer.tags &&
-                            lecturer.tags.map((tag: { name: string; uuid: string }) => (
-                            <span key={tag.uuid}>{tag.name}</span>
-                        ))}
+                        {lecturer.tags.map((tag: { name: string; uuid: string }) => tag.name).join(', ')}
                     </div>
                     <a href={`/lecturers/${lecturer.uuid}`}>
                         <div className="lecturer-btn">

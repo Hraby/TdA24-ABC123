@@ -1,0 +1,14 @@
+.ourlecturers{
+    max-width: 1200px;
+    width: 100%;
+}
+
+.ourlecturers h2{
+    color: #000;
+    font-family: Lalezar;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-bottom: 50px;
+}

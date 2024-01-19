@@ -1,0 +1,51 @@
+{
+  "name": "tda24-abc123",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "tsx ./prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.1",
+    "clsx": "^2.1.0",
+    "next": "14.0.2",
+    "npx": "^10.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-select": "^5.8.0",
+    "tsx": "^4.5.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.7",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.2",
+    "prisma": "^5.6.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "description": "",
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hraby/TdA24-ABC123.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hraby/TdA24-ABC123/issues"
+  },
+  "homepage": "https://github.com/Hraby/TdA24-ABC123#readme"
+}

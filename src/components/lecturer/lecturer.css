@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Open+Sans:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lecturer{
+    max-width: 1200px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 50px;  
+    min-height: 700px;
+}
+
+.lecturer-back{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 25px;
+}
+
+.lecturer a{
+    text-decoration: none;
+    color: #000;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer h1{
+    color: #000;
+    font-family: Lalezar;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-more{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.lecturer-info{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 800px;
+}
+
+.lecturer-img{
+    width: 250px;
+}
+
+.lecturer-img img{
+    width: 250px;
+    height: 390px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.lecturer-location{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    padding: 0 20px;
+    height: 20px;
+    border-radius: 15px;
+    background: #15374C;
+    color: #74C7D3;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-name{
+    color: #000;
+    font-family: Lalezar;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-claim{
+    color: #000;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-bio{
+    color: #000;
+    text-align: justify;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-tags{
+    display: flex;
+    flex-direction: column;
+}
+
+.lecturer-tag{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

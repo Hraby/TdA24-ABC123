@@ -1,0 +1,59 @@
+.ourlecturers-up{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ourlecturers-more{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ourlecturers-more img{
+    padding-left: 15px;
+}
+
+.ourlecturers-more a{
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.ourlecturers-filters{
+    display: flex;
+    gap: 15px;
+}
+
+.ourlecturers-filter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    border: 1px solid #000;
+    color: #000;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+button{
+    width: 100px;
+    border-radius: 15px;
+    background-color: #15374C;
+    border: none;
+    color: white;
+    font-family: Open Sans;
+}
+
+button:hover{
+    cursor: pointer;
+}

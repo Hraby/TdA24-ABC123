@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import "./tags.css"
-import LecturerCard from "@/components/lecturerCard/lecturerCard"
+import LecturerCard from "@/components/lecturercard/lecturercard"
 import { useRouter } from 'next/router'
 
 async function fetchFilters(){

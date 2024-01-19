@@ -1,8 +1,8 @@
 import "./aboutus.css"
 
-export function AboutUs(){
+export default function AboutUs(){
     return(
-        <div className="aboutus" >
+        <div className="aboutus">
             <div className="aboutus-main">
                 <h2>O nás</h2>
                 <p>Teacher digital Agency je mladá společnost zaměřená na vyhledávání špičkových odborníků z řad učitelů, lektorů a tutorů. Sestavujeme exkluzivní databázi těchto specialistů, abychom mohli efektivně propojovat klienty s ideálními odborníky

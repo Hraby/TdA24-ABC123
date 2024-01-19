@@ -1,5 +1,5 @@
 import "./lecturers.css"
-import LecturerCard from "@/components/lecturerCard/lecturerCard"
+import LecturerCard from "@/components/lecturercard/lecturercard"
 import { redirect } from 'next/navigation'
 
 async function fetchFilters(){

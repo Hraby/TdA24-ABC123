@@ -1,6 +1,6 @@
 import "./aboutUs.css"
 
-export function AboutUs(){
+export default function AboutUs(){
     return(
         <div className="aboutus">
             <div className="aboutus-main">

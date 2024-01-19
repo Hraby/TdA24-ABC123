@@ -1,4 +1,4 @@
-import "./ourLecturers.css"
+import "./ourlecturers.css"
 import Tags from "@/components/tags/tags"
 
 

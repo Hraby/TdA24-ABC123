@@ -1,6 +1,6 @@
 
 
-import "./lecturerCard.css"
+import "./lecturercard.css"
 export default async function Page({lecturers}: {lecturers:any}) {
     return (
     <div className="lecturers-cards">

@@ -1,5 +1,10 @@
-import Homepage from "@/pages/homepage/homepage";
-import Head from "next/head";
+import "./main.css"
+import {Navbar} from "@/components/navbar/navbar"
+import {Hero} from "@/components/hero/hero"
+import {AboutUs} from "@/components/aboutus/aboutus"
+import {OurLecturers} from "@/components/ourlecturers/ourlecturers"
+import {Footer} from "@/components/footer/footer"
+import Head from 'next/head'
 
 export default function Home() {
     return (
@@ -13,7 +18,27 @@ export default function Home() {
                 <meta name="msapplication-TileColor" content="#da532c" />
                 <meta name="theme-color" content="#ffffff" />
             </Head>
-            <Homepage/>
+            <div>
+                <section className="section">
+                    <Navbar/>
+                </section>
+
+                <section className="section">
+                    <Hero/>
+                </section>
+
+                <section className="section" id="o-nas">
+                    <AboutUs/>
+                </section>
+
+                <section className="section">
+                    <OurLecturers/>
+                </section>
+
+                <section className="section">
+                    <Footer/>
+                </section>
+            </div>
         </div>
     )
 }

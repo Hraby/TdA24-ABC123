@@ -1,58 +1,47 @@
-import { notFound } from "next/navigation"
-import "./lecturer.css"
-  
-export default function Lecturer({ data }: { data: any }){
-    if (!data.first_name) return notFound()
+import './_lektor.css';
 
-    const tags = data.tags || []
-    const tagsString = data.tags.map((tag: { name: string; uuid: string }) => tag.name).join(', ');
-    const phones = data.contact.telephone_numbers || []
-    const phonesString = phones.join(', ')
-    const emails = data.contact.emails || []
-    const emailsString = emails.join(', ')
-
+export default function Lektor() {
     return (
         <div className="lecturer">
             <a href="/#"><div className="lecturer-back"><img src="/Arrow-3.svg"/>Zpět</div></a>
             <h1>Naši lektoři</h1>
             <div className="lecturer-more">
                 <div className="lecturer-img">
-                    <img src={data.picture_url} alt="Učitel obrázek"></img>
+                    <img src="https://tourdeapp.cz/storage/images/2023_02_25/412ff296a291f021bbb6de10e8d0b94863fa89308843b/big.png.webp" alt="Učitel obrázek"></img>
                 </div>
                 <div className="lecturer-info">
                     <div className="lecturer-location">
-                        <span>{data.location}</span>
+                        <span>Brno</span>
                     </div>
                     <div className="lecturer-name">
-                        <h2>{data.title_before} {data.first_name} {data.middle_name} {data.last_name} {data.title_after}</h2>
+                        <h2>Mgr. Petra Swil Plachá MBA</h2>
                     </div>
                     <div className="lecturer-claim">
-                        <h3 dangerouslySetInnerHTML={{ __html: data.claim }}></h3>
+                        <h3>Aktivní studentka / Předsedkyně spolku / Projektová manažerka</h3>
                     </div>
                     <div className="lecturer-bio">
-                        <p dangerouslySetInnerHTML={{ __html: data.bio }}></p>
+                        <p>Baví mě organizovat věci. Ať už to bylo vyvíjení mobilních aplikací ve Futured, pořádání konferencí, spolupráce na soutěžích Prezentiáda, pIšQworky, <b>Tour de App</b> a Středoškolák roku, nebo třeba dobrovolnictví, vždycky jsem skončila u projektového managementu, rozvíjení soft-skills a vzdělávání. U studentských projektů a akcí jsem si vyzkoušela snad všechno od marketingu po logistiku a moc ráda to předám dál. Momentálně studuji Pdf MUNI a FF MUNI v Brně</p>
                     </div>
                     <div className="lecturer-tags">
                         <div className="lecturer-tag">
                             <img src=""/>
-                            <span>Kč{data.price_per_hour}/hod</span>
+                            <span>Kč1200/h</span>
                         </div>
                         <div className="lecturer-tag">
                             <img src=""/>
-                            {tagsString && <span>{tagsString}</span>}
+                            <span>lorem ipsum, lorem ipsum</span>
                         </div>
                         <div className="lecturer-tag">
                             <img src=""/>
-                            <span>{phonesString}</span>
+                            <span>+420 323 324 432</span>
                         </div>
                         <div className="lecturer-tag">
                             <img src=""/>
-                            <span>{emailsString}</span>
+                            <span>info@test.cz</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     )
-  }
-  
+}

@@ -7,8 +7,8 @@ export function Navbar(){
             <ul>
                 <li><a href="/">Domů</a></li>
                 <li><a href="/lecturer">Naši lektoři</a></li>
-                <li><a href="#o-nas">O nás</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
+                <li><a href="/#o-nas">O nás</a></li>
+                <li><a href="/#">Kontakt</a></li>
             </ul>
         </nav>
     )

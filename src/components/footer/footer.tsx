@@ -5,14 +5,14 @@ export function Footer(){
         <div className="footer">
             <div className="footer-up">
                 <div className="footer-left">
-                    <img src="/TeacherDigitalAgency_LOGO_colour-white.png"/>
+                    <a href="/"><img src="/TeacherDigitalAgency_LOGO_colour-white.png"/></a>
                 </div>
                 <div className="footer-right">
                     <h3>Menu</h3>
                     <div className="footer-menu">
-                        <a href="/#our-lecturers">Naši lektoři</a>
+                        <a href="/lecturers">Naši lektoři</a>
                         <a href="/#o-nas">O nás</a>
-                        <a href="/#contact">Kontakt</a>
+                        <a href="/#kontakt">Kontakt</a>
                     </div>
                 </div>
             </div>

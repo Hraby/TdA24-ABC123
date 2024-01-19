@@ -13,7 +13,7 @@ export default function Lecturer({ data }: { data: any }){
 
     return (
         <div className="lecturer">
-            <a href="/#"><div className="lecturer-back"><img src="/Arrow-3.svg"/>Zpět</div></a>
+            <a href="/lecturers"><div className="lecturer-back"><img src="/Arrow-3.svg"/>Zpět</div></a>
             <h1>Naši lektoři</h1>
             <div className="lecturer-more">
                 <div className="lecturer-img">
@@ -34,19 +34,19 @@ export default function Lecturer({ data }: { data: any }){
                     </div>
                     <div className="lecturer-tags">
                         <div className="lecturer-tag">
-                            <img src=""/>
+                            <img src="/cash.png"/>
                             <span>Kč{data.price_per_hour}/hod</span>
                         </div>
                         <div className="lecturer-tag">
-                            <img src=""/>
+                            <img src="/tags.png"/>
                             {tagsString && <span>{tagsString}</span>}
                         </div>
                         <div className="lecturer-tag">
-                            <img src=""/>
+                            <img src="/call.png"/>
                             <span>{phonesString}</span>
                         </div>
                         <div className="lecturer-tag">
-                            <img src=""/>
+                            <img src="/email.png"/>
                             <span>{emailsString}</span>
                         </div>
                     </div>

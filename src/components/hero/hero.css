@@ -40,6 +40,11 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    transition: 0.25s;
+}
+
+.hero-btn-main:hover{
+    background-color: #00384D;
 }
 
 .hero-btn-scnd{
@@ -58,6 +63,12 @@
     font-weight: 700;
     line-height: normal;
     box-sizing: border-box;
+    transition: 0.25s;
+}
+
+.hero-btn-scnd:hover{
+    background-color: #00384D;
+    color: white;
 }
 
 .hero-btns{

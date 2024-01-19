@@ -2,8 +2,15 @@ import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient()
 
-export async function getLecturers() {
+export async function getLecturers({ tag, location, price_per_hour }: { tag?: string, location?: string, price_per_hour?: number }) {
+  const filter: any = {};
+  if (tag) filter.tags = { some: { name: { contains: tag } } };
+  if (location) filter.location = { contains: location };
+  if (price_per_hour) filter.price_per_hour = {  lte: price_per_hour };
+
+
   const lecturers = await prisma.lecturer.findMany({
+    where: filter,
     select: {
       uuid: true,
       title_before: true,

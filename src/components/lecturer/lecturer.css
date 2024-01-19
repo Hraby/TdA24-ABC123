@@ -124,6 +124,9 @@
 }
 
 .lecturer-tag{
+    display: flex;
+    align-items: center;
+    gap: 15px;
     color: #000;
     font-family: Open Sans;
     font-size: 16px;

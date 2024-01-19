@@ -39,15 +39,15 @@ export async function getLecturers({ tag, location, price_per_hour }: { tag?: st
     },
   })
 
-  const lecturersFormated = lecturers.map((lecturer) => ({
+  const lecturersFormated = lecturers.map((lecturer: any) => ({
     ...lecturer,
     contact: {
       ...lecturer.contact,
       telephone_numbers: lecturer?.contact?.telephone_numbers
-        ? lecturer.contact.telephone_numbers.split(',').map(phone => phone.trim())
+        ? lecturer.contact.telephone_numbers.split(',').map((phone: any) => phone.trim())
         : [],
       emails: lecturer?.contact?.emails
-        ? lecturer.contact.emails.split(',').map(email => email.trim())
+        ? lecturer.contact.emails.split(',').map((email: any) => email.trim())
         : []
     },
   }))

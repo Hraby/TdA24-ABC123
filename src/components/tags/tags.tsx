@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
 import "./tags.css"
 import LecturerCard from "@/components/lecturercard/lecturercard"
-import { useRouter } from 'next/router'
 
 async function fetchFilters(){
     let url = "http://localhost:3000/api/lecturers/"

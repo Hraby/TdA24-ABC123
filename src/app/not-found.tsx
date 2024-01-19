@@ -1,14 +1,11 @@
 import {Navbar} from "@/components/navbar/navbar"
-import {Hero} from "@/components/hero/hero"
-import {AboutUs} from "@/components/aboutUs/aboutUs"
-import OurLecturers from "@/components/ourLecturers/ourLecturers"
 import {Footer} from "@/components/footer/footer"
-import Contact from "@/components/contact/contact"
 import Head from "next/head"
 
-export default function Home() {
-    return (
-        <div>
+export default function NotFound(){
+    return(
+        <>
+            <div>
             <Head>
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -23,24 +20,16 @@ export default function Home() {
             </section>
 
             <section className="section">
-                <Hero/>
-            </section>
-
-            <section className="section" id="o-nas">
-                <AboutUs/>
-            </section>
-
-            <section className="section">
-                <OurLecturers/>
-            </section>
-
-            <section className="section" id="kontakt">
-                <Contact/>
+                <div className="not-found">
+                    <h1>Stránka nebyla nalezena.</h1>
+                    <p>Nemohli jsme najít stránku po které tak toužíte.<br/>Prosím vraťte se zpátky na <a href="/">Domovskou</a> stránku</p>
+                </div>
             </section>
 
             <section className="section">
                 <Footer/>
             </section>
         </div>
+        </>
     )
 }

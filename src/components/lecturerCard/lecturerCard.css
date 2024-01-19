@@ -1,0 +1,115 @@
+.lecturers-cards{
+    padding-top: 50px;
+    display: flex;
+    column-gap: 65px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.lecturer-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 250px;
+    padding-bottom: 50px;
+    min-height: 550px;
+}
+
+.lecturer-card img{
+    width: 250px;
+    height: 250px;
+    border-radius: 15px 15px 0 0;
+}
+
+.lecturer-location{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    height: 20px;
+    width: max-content;
+    padding: 0 20px;
+    border-radius: 15px;
+    background: #15374C;
+    color: #74C7D3;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-info h3{
+    margin-top: 15px;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-info span{
+    margin-top: 15px;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.lecturer-info span .lecturer-price-color{
+    color: #74C7D3;
+}
+
+.lecturer-card p{
+    margin-top: 15px;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-tags{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.lecturer-tags img{
+
+    width: 20px;
+    height: 20px;
+}
+
+.lecturer-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 225px;
+    height: 55px;
+    border-radius: 15px;
+    background: #74C7D3;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    transition: 0.25s;
+}
+
+.lecturer-btn:hover{
+    background: #88d7e4;
+}

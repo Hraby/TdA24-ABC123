@@ -1,26 +1,17 @@
-.ourlecturers-up{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.lecturers{
+    padding-top: 50px;
+    max-width: 1200px;
+    width: 100%;
 }
 
-.ourlecturers-more{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.ourlecturers-more img{
-    padding-left: 15px;
-}
-
-.ourlecturers-more a{
+.lecturers h1{
     color: #000;
-    font-family: "Open Sans";
-    font-size: 16px;
+    font-family: Lalezar;
+    font-size: 36px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     line-height: normal;
+    padding-bottom: 50px;
 }
 
 .ourlecturers-filters{
@@ -45,15 +36,16 @@
     line-height: normal;
 }
 
-button{
+.lecturers button{
     width: 100px;
     border-radius: 15px;
     background-color: #15374C;
     border: none;
     color: white;
     font-family: Open Sans;
+    font-weight: 600;
 }
 
-button:hover{
+.lecturers button:hover{
     cursor: pointer;
 }

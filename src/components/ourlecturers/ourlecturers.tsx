@@ -1,11 +1,12 @@
-import "./ourlecturers.css"
-import {Tags} from "@/components/tags/tags"
+import "./ourLecturers.css"
+import Tags from "@/components/tags/tags"
 
-export function OurLecturers(){
+
+export default function OurLecturers(){
     return(
-        <div className="ourlecturers">
+        <div className="ourlecturers" id="our-lecturers">
            <h2>Naši lektoři</h2>
-           <Tags/>
+           <Tags />
         </div>
     )
 }

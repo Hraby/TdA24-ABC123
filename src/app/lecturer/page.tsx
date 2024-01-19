@@ -1,4 +1,4 @@
-import Lektor from "@/pages/lektor/lektor";
+import Lektor from "@/components/lektor/lektor";
 import {Navbar} from "@/components/navbar/navbar";
 import {Footer} from "@/components/footer/footer"
 

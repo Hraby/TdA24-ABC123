@@ -1,14 +1,13 @@
 import "./lecturers.css"
-import LecturerCard from "@/components/lecturercard/lecturercard"
-import { redirect } from 'next/navigation'
+import { getLecturers } from "@/lib/db";
+import {LecturerCard} from "@/components/lecturerCard/lecturerCard"
+import SelectFilter from "@/components/filters/_select"
+import SliderFilter from "@/components/filters/_slider"
+import { redirect } from "next/navigation"
+
 
 async function fetchFilters(){
-    let url = "http://localhost:3000/api/lecturers/"
-    if(process.env.NODE_ENV === "production"){
-        url = "http://37922aa8e78cde16.app.tourdeapp.cz/api/lecturers/"
-    }
-    const res = await fetch(url)
-    const lecturers = await res.json()
+    const lecturers = await getLecturers({});
     const uniquePrices = [...new Set(lecturers.map((lecturer: any) => lecturer.price_per_hour))];
     const uniqueLocations = [...new Set(lecturers.map((lecturer: any) => lecturer.location))];
     const uniqueTags = [...new Set(lecturers.flatMap((lecturer: any) => lecturer.tags.map((tag: Tag) => tag.name)))];
@@ -20,70 +19,61 @@ async function fetchFilters(){
     }
 }
 
-export async function fetchLecturers({params}: {params:any}) {
-    let url = "http://localhost:3000/api/lecturers?"
-    if(process.env.NODE_ENV === "production"){
-        url = "http://37922aa8e78cde16.app.tourdeapp.cz/api/lecturers?"
-    }
-    if(params.tags) url += "&tags="+params.tags
-    if(params.price_per_hour) url += "&price_per_hour="+params.price_per_hour
-    if(params.location) url += "&location="+params.location
-    const res = await fetch(url)
-    const lecturers = await res.json()
-    return lecturers
+async function fetchLecturers({params}: {params:any}) {
+    return await getLecturers(params);
 }
 
-export default async function Page({params}: {params: any}){
+export default async function Page({params}: {params:any}){
     const lecturers = await fetchLecturers({params})
     const filters = await fetchFilters()
+
     const filterLecturers = async (formData: FormData) =>{
         "use server"
-        const tags = formData.get("tags")
-        const price = formData.get("price")
-        const location = formData.get("location")
+        const tags = formData.getAll("Tagy")
+        const price = formData.get("Cena")
+        const location = formData.get("Lokace")
 
-        let url = "http://localhost:3000/lecturers?"
-        if(process.env.NODE_ENV === "production"){
-            url = "http://37922aa8e78cde16.app.tourdeapp.cz/lecturers?"
+        const params = new URLSearchParams();
+
+        if (tags.some(tag => tag !== "all")) {
+            params.append("tags", tags.toString());
         }
-        if(tags) url += "&tags="+tags
-        if(price) url += "&price_per_hour="+price
-        if(location) url += "&location="+location
-        return redirect(url)
+
+        if (price !== null && price !== "max") {
+            params.append("price_per_hour", price.toString());
+        }
+
+        if (location !== null && location !== "all") {
+            params.append("location", location.toString());
+        }
+
+        if (params.toString() !== ""){
+            redirect("/lecturers?" + params.toString());
+        }
+        redirect("/lecturers");
         
     }
+
     return(
-        <div className="lecturers">
+        <div className="lecturers min-h-screen">
             <h1>Naši lektoři</h1>
             <form action={filterLecturers}>
                 <div className="ourlecturers-filters">
-                    <select className="ourlecturers-filter" name="tags">
-                        <option value="">Tagy</option>
-                        {filters.uniqueTags.map((tag:any, index:any) => (
-                        <option key={index} value={tag}>
-                        {tag}
-                        </option>
-                        ))}
-                    </select>
-                    <select className="ourlecturers-filter" name="price">
-                        <option value="">Cena</option>
-                        <option value="500">≤ 500</option>
-                        <option value="1000">≤ 1000</option>
-                        <option value="1500">≤ 1500</option>
-                        <option value="1501">&gt; 1500</option>
-                    </select>
-                    <select className="ourlecturers-filter" name="location">
-                        <option value="">Lokace</option>
-                        {filters.uniqueLocations.map((location: any, index: any) => (
-                        <option key={index} value={location}>
-                        {location}
-                        </option>
-                        ))}
-                    </select>
-                    <button type="submit">Filtrovat</button>
+                    <SelectFilter name={"Tagy"} data={filters.uniqueTags} />
+                    <SliderFilter name={"Cena"} data={filters.uniquePrices}/>
+                    <SelectFilter name={"Lokace"} data={filters.uniqueLocations}/>
+                    <button className="filter-btn" type="submit">Filtrovat</button>
                 </div>
             </form>
-            <LecturerCard lecturers={lecturers}/>
+            {lecturers != null && lecturers.length > 0 ?(
+                <LecturerCard lecturers={lecturers}/>
+            ) : (
+                <div className="flex items-center justify-center flex-col">
+                    <span className="cancel-text">Nebyli nalezeni žádní lektoři :(</span>
+                    <span className="cancel-action">Můžete zrušit filtry kliknutím <a className="cancel-action" href="/lecturers">ZDE</a></span>
+                </div>
+            )}
+            
         </div>
     )
 }

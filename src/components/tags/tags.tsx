@@ -1,7 +1,9 @@
 import { redirect } from 'next/navigation'
 import "./tags.css"
-import LecturerCard from "@/components/lecturercard/lecturercard"
-import { useRouter } from 'next/router'
+import {LecturerCard} from "@/components/lecturerCard/lecturerCard"
+import DropdownFilter from "@/components/filters/_dropdown-menu"
+import SelectFilter from "@/components/filters/_select"
+import SliderFilter from "@/components/filters/_slider"
 
 async function fetchFilters(){
     let url = "http://localhost:3000/api/lecturers/"
@@ -38,18 +40,28 @@ export default async function Tags() {
 
     const filterLecturers = async (formData: FormData) =>{
         "use server"
-        const tags = formData.get("tags")
-        const price = formData.get("price")
-        const location = formData.get("location")
+        const tags = formData.getAll("Tagy")
+        const price = formData.get("Cena")
+        const location = formData.get("Lokace")
 
-        let url = "http://localhost:3000/lecturers?"
-        if(process.env.NODE_ENV === "production"){
-            url = "http://37922aa8e78cde16.app.tourdeapp.cz/lecturers?"
+        const params = new URLSearchParams();
+        if (tags.some(tag => tag !== "")) {
+            params.append("tags", tags.join(","));
         }
-        if(tags) url += "&tags="+tags
-        if(price) url += "&price_per_hour="+price
-        if(location) url += "&location="+location
-        return redirect(url)
+
+        if (price !== null && price !== "max") {
+            params.append("price_per_hour", price.toString());
+        }
+
+        if (location !== null && location !== "all") {
+            params.append("location", location.toString());
+        }
+
+        if (params.toString() !== ""){
+            redirect("/lecturers?" + params.toString());
+        }
+        
+        redirect("/lecturers");
         
     }
 
@@ -58,39 +70,19 @@ export default async function Tags() {
             <form action={filterLecturers}>
                 <div className="ourlecturers-up">
                     <div className="ourlecturers-filters">
-                        <select className="ourlecturers-filter" name="tags">
-                            <option value="">Tagy</option>
-                            {filters.uniqueTags.map((tag:any, index:any) => (
-                            <option key={index} value={tag}>
-                            {tag}
-                            </option>
-                            ))}
-                        </select>
-                        <select className="ourlecturers-filter" name="price">
-                            <option value="">Cena</option>
-                            <option value="500">≤ 500</option>
-                            <option value="1000">≤ 1000</option>
-                            <option value="1500">≤ 1500</option>
-                            <option value="1501">&gt; 1500</option>
-                        </select>
-                        <select className="ourlecturers-filter" name="location">
-                            <option value="">Lokace</option>
-                            {filters.uniqueLocations.map((location: any, index: any) => (
-                            <option key={index} value={location}>
-                            {location}
-                            </option>
-                            ))}
-                        </select>
-                        <button type="submit">Filtrovat</button>
+                        <DropdownFilter name={"Tagy"} data={filters.uniqueTags} />
+                        <SliderFilter name={"Cena"} data={filters.uniquePrices}/>
+                        <SelectFilter name={"Lokace"} data={filters.uniqueLocations}/>
+                        <button className="filter-btn" type="submit">Filtrovat</button>
                     </div>
                     <div className="ourlecturers-more">
-                        <a href="/lecturers">Zobrazit všechny
-                        <img src="/arrow-4.png"></img>
+                        <a className="flex items-center" href="/lecturers">Zobrazit všechny
+                            <img className="h-full" src="/arrow-4.png"></img>
                         </a>
                     </div>
                 </div>
-                <LecturerCard lecturers={lecturers} />
             </form>
+            <LecturerCard lecturers={lecturers} />
         </>
     )
 }

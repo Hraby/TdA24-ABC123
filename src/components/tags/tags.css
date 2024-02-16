@@ -45,15 +45,16 @@
     line-height: normal;
 }
 
-button{
+.ourlecturers-filters .filter-btn{
     width: 100px;
     border-radius: 15px;
     background-color: #15374C;
     border: none;
     color: white;
     font-family: Open Sans;
+    font-weight: 600;
 }
 
-button:hover{
+.ourlecturers-filters .filter-btn:hover{
     cursor: pointer;
 }

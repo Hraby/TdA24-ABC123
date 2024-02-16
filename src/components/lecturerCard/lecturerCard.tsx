@@ -1,7 +1,7 @@
 
 
 import "./lecturercard.css"
-export default async function Page({lecturers}: {lecturers:any}) {
+export async function LecturerCard({lecturers}: {lecturers:any}) {
     return (
     <div className="lecturers-cards">
         {lecturers.map((lecturer: any, uuid: string) => (
@@ -15,7 +15,7 @@ export default async function Page({lecturers}: {lecturers:any}) {
                     <span><span className="lecturer-price-color">Kč{lecturer.price_per_hour}</span>/h</span>
                 </div>
                 <p dangerouslySetInnerHTML={{ __html: lecturer.bio.slice(0, 100) + (lecturer.bio.length > 100 ? '...' : '') }}></p>
-                <div className="lecturer-tags">
+                <div className="lecturer-tags pb-4">
                     <img src="/Group-22.png"/>
                     {lecturer.tags.slice(0, 3).map((tag: { name: string; uuid: string }) => tag.name).join(', ')}
                     {lecturer.tags.length > 3 && '...'}

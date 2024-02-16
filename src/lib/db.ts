@@ -2,11 +2,11 @@ import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient()
 
-export async function getLecturers({ tag, location, price_per_hour }: { tag?: string, location?: string, price_per_hour?: number }) {
+export async function getLecturers(params: any) {
   const filter: any = {};
-  if (tag) filter.tags = { some: { name: { contains: tag } } };
-  if (location) filter.location = { contains: location };
-  if (price_per_hour) filter.price_per_hour = {  lte: price_per_hour };
+  if (params.tags) filter.tags = { some: { name: { contains: params.tags } } };
+  if (params.location) filter.location = { contains: params.location };
+  if (params.price) filter.price_per_hour = {  lte: params.price };
 
 
   const lecturers = await prisma.lecturer.findMany({

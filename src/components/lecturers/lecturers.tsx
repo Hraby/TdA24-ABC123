@@ -1,6 +1,6 @@
 import "./lecturers.css"
 import { getLecturers } from "@/lib/db";
-import {LecturerCard} from "@/components/lecturerCard/lecturerCard"
+import LecturerCard from "@/components/lecturercard/lecturercard"
 import SelectFilter from "@/components/filters/_select"
 import SliderFilter from "@/components/filters/_slider"
 import { redirect } from "next/navigation"

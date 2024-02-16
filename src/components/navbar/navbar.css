@@ -39,34 +39,21 @@ nav li a {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    transition: 0.25s;
 }
 
-nav li a:hover {
+nav li a.item:hover {
     text-decoration: none;
     color: #74C7D3;
     position: relative;
 }
 
-nav li a:hover:after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #74C7D3;
-    margin-top: 1px;
+.lecturer-zone-btn{
+    background-color: #74C7D3;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-nav li a.active {
-    text-decoration: none;
-    color: #74C7D3;
-    position: relative;
-}
-
-nav li a.active:after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #74C7D3;
-    margin-top: 1px;
+.lecturer-zone-btn:hover{
+    background-color: #67b0bb;
 }

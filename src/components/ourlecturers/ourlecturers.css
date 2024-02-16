@@ -1,6 +1,7 @@
 .ourlecturers{
     max-width: 1200px;
     width: 100%;
+    padding-top: 100px;
 }
 
 .ourlecturers h2{
@@ -9,6 +10,13 @@
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
+}
+
+.ourlecturers a{
+    color: #000;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
     line-height: normal;
-    padding-bottom: 50px;
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import "./layout.css"
+import "./global.css"
 
 export const metadata: Metadata = {
   title: 'Špičkový učitelé na dosah - Teacher digital Agency'

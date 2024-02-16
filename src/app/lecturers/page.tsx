@@ -2,8 +2,6 @@ import { Footer } from "@/components/footer/footer";
 import { Navbar } from "@/components/navbar/navbar";
 import Lecturers from "@/components/lecturers/lecturers"
 
-
-
 export default function Page({searchParams}: {searchParams: any}) {
     return (
         <div>

@@ -36,7 +36,7 @@
     line-height: normal;
 }
 
-.lecturers button{
+.lecturers .filter-btn{
     width: 100px;
     border-radius: 15px;
     background-color: #15374C;
@@ -46,6 +46,32 @@
     font-weight: 600;
 }
 
-.lecturers button:hover{
+.lecturers .cancel-text{
+    background: linear-gradient(90deg, #15374C 0%, #1D4C69 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Lalezar;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 50px;
+}
+
+.lecturers span.cancel-action{
+    color: #000;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.lecturers a.cancel-action{
+    color: #74C7D3;
+    cursor: pointer;
+}
+
+.lecturers .filter-btn:hover{
     cursor: pointer;
 }

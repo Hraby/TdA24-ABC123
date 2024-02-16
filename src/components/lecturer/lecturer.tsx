@@ -5,11 +5,12 @@ export default function Lecturer({ data }: { data: any }){
     if (!data.first_name) return notFound()
 
     const tags = data.tags || []
-    const tagsString = data.tags.map((tag: { name: string; uuid: string }) => tag.name).join(', ');
-    const phones = data.contact.telephone_numbers || []
-    const phonesString = phones.join(', ')
-    const emails = data.contact.emails || []
-    const emailsString = emails.join(', ')
+    const tagsString = tags.map((tag: { name: string; uuid: string }) => tag.name).join(', ');
+
+    const contact = data.contact || {};
+    const phones = contact.telephone_numbers || [];
+
+    const emails = contact.emails || [];
 
     return (
         <div className="lecturer">
@@ -43,13 +44,14 @@ export default function Lecturer({ data }: { data: any }){
                         </div>
                         <div className="lecturer-tag">
                             <img src="/call.png"/>
-                            <span>{phonesString}</span>
+                            <span>{phones}</span>
                         </div>
                         <div className="lecturer-tag">
                             <img src="/email.png"/>
-                            <span>{emailsString}</span>
+                            <span>{emails}</span>
                         </div>
                     </div>
+                    <a href="">Domluvit si schůzku</a>
                 </div>
             </div>
         </div>

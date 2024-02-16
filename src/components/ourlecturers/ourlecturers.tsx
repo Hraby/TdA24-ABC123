@@ -1,6 +1,6 @@
 import "./ourlecturers.css"
 import { getLecturers } from "@/lib/db";
-import { LecturerCard } from "../lecturerCard/lecturerCard"
+import LecturerCard from "../lecturercard/lecturercard"
 
 export async function fetchLecturers() {
     const res = await getLecturers({});

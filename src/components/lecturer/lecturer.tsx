@@ -1,5 +1,17 @@
 import { notFound } from "next/navigation"
 import "./lecturer.css"
+import {
+    Dialog,
+    DialogContent,
+    DialogClose,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+import Form from "@/components/form/form"
+import { Button } from "../ui/button"
+import { getTimeSlot } from "@/lib/db"
   
 export default function Lecturer({ data }: { data: any }){
     if (!data.first_name) return notFound()
@@ -12,9 +24,27 @@ export default function Lecturer({ data }: { data: any }){
 
     const emails = contact.emails || [];
 
+    const submit = async (formData: FormData) =>{
+        "use server"
+        const first_name = formData.get("first_name");
+        const last_name = formData.get("last_name");
+        const email = formData.get("email");
+        const form = formData.get("form");
+        const date = formData.get("day");
+        let formatedDate;
+        if (date) {
+            formatedDate = new Date(date.toString().replace(/(\d{2})\w{2},/, '$1,'));
+            formatedDate.setUTCDate(formatedDate.getUTCDate() + 1);
+            formatedDate.setUTCHours(0, 0, 0, 0);
+            formatedDate = formatedDate.toISOString();
+        }
+        const timeSlot = await getTimeSlot("2024-02-24T00:00:00.000Z", "36906f6f-a5b9-4be1-95f1-48851f63ced1");
+        console.log(timeSlot)
+      }
+
     return (
         <div className="lecturer">
-            <a href="/lecturers"><div className="lecturer-back"><img src="/Arrow-3.svg"/>Zpět</div></a>
+            <a href="/lecturers"><div className="lecturer-back"><img src="/arrow-3.svg"/>Zpět</div></a>
             <h1>Naši lektoři</h1>
             <div className="lecturer-more">
                 <div className="lecturer-img">
@@ -51,7 +81,22 @@ export default function Lecturer({ data }: { data: any }){
                             <span>{emails}</span>
                         </div>
                     </div>
-                    <a href="">Domluvit si schůzku</a>
+                    <Dialog>
+                        <DialogTrigger className="w-max">Domluvit si schůzku</DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                            <DialogTitle>Objednávka hodiny - {data.first_name} {data.last_name}</DialogTitle>
+                            </DialogHeader>
+                            <form action={submit}>
+                                <Form data={data}/>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button type="submit">Odeslat</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
         </div>

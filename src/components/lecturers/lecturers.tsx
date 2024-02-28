@@ -59,9 +59,9 @@ export default async function Page({params}: {params:any}){
             <h1>Naši lektoři</h1>
             <form action={filterLecturers}>
                 <div className="ourlecturers-filters">
-                    <SelectFilter name={"Tagy"} data={filters.uniqueTags} />
-                    <SliderFilter name={"Cena"} data={filters.uniquePrices}/>
-                    <SelectFilter name={"Lokace"} data={filters.uniqueLocations}/>
+                    <SelectFilter params={params.tags} name={"Tagy"} data={filters.uniqueTags} />
+                    <SliderFilter params={params.price_per_hour} name={"Cena"} data={filters.uniquePrices}/>
+                    <SelectFilter params={params.location} name={"Lokace"} data={filters.uniqueLocations}/>
                     <button className="filter-btn" type="submit">Filtrovat</button>
                 </div>
             </form>

@@ -1,0 +1,36 @@
+.dashboard-stats{
+    max-width: 380px;
+    height: 150px;
+    width: 100%;
+    background-color: #D1F9FF;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.stats-content .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 85px;
+    background-color: #74C7D3;
+    border-radius: 5px;
+}
+
+.stats-content h2{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.stats-content span{
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.stats-time span{
+    font-size: 12px;
+    font-weight: bold;
+}

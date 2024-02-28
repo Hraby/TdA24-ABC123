@@ -55,7 +55,7 @@ model Reservation {
   timeSlot      String
   createdAt     DateTime @default(now())
   message       String?
-  form          Boolean // 0 - Prezencne, 1 - Online
+  form          String // online, offline
   status        Boolean  @default(true) // 0 - Zruseno, 1 - Rezervovano
   tags          Tag[]
 }

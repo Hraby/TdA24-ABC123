@@ -11,10 +11,12 @@ import {
   } from "@/components/ui/dialog"
 import Form from "@/components/form/form"
 import { Button } from "../ui/button"
-import { getTimeSlot } from "@/lib/db"
-  
+import {addReservation, getReservations} from "@/lib/db";
+
 export default function Lecturer({ data }: { data: any }){
     if (!data.first_name) return notFound()
+
+    const uuid = data.uuid;
 
     const tags = data.tags || []
     const tagsString = tags.map((tag: { name: string; uuid: string }) => tag.name).join(', ');
@@ -31,16 +33,18 @@ export default function Lecturer({ data }: { data: any }){
         const email = formData.get("email");
         const form = formData.get("form");
         const date = formData.get("day");
+        const timeSlot = formData.get("timeSlot");
+        const phone_number = formData.get("phone_number");
+        const message = formData.get("message");
         let formatedDate;
         if (date) {
             formatedDate = new Date(date.toString().replace(/(\d{2})\w{2},/, '$1,'));
             formatedDate.setUTCDate(formatedDate.getUTCDate() + 1);
             formatedDate.setUTCHours(0, 0, 0, 0);
-            formatedDate = formatedDate.toISOString();
         }
-        const timeSlot = await getTimeSlot("2024-02-24T00:00:00.000Z", "36906f6f-a5b9-4be1-95f1-48851f63ced1");
-        console.log(timeSlot)
-      }
+        const data = {lecturer_uuid: uuid,first_name: first_name, last_name: last_name, email: email, form: form, date: formatedDate, timeSlot: timeSlot, phone_number: phone_number, message: message};
+        await addReservation(data);
+    }
 
     return (
         <div className="lecturer">

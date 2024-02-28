@@ -17,15 +17,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { cs } from "date-fns/locale";
-import { getTimeSlot } from "@/lib/db";
+import { generateTimeSlot } from "@/lib/db";
+import { Textarea } from "@/components/ui/textarea"
 
 const FormSchema = z.object({
   first_name: z.string({ required_error: "Jméno je povinné!" }),
   last_name: z.string({ required_error: "Příjmení je povinné!" }),
   email: z.string({ required_error: "Email je povinný!" }),
-  form: z.enum(["0", "1"], { required_error: "Musíte vybrat způsob doučování" }),
+  form: z.string({ required_error: "Musíte vybrat způsob doučování" }),
   dob: z.date({ required_error: "Datum je povinný!" }),
-  timeslot: z.string({ required_error: "Čas je povinný!" })
+  timeslot: z.string({ required_error: "Čas je povinný!" }),
+  message: z.string()
 });
 
 interface Timeslot {
@@ -33,42 +35,24 @@ interface Timeslot {
   label: string;
 }
 
-function generateTimeslots(): Timeslot[] {
-  const timeslots = [];
-  const startTime = new Date(0);
-  startTime.setUTCHours(7, 0, 0, 0); // Začátek od 7:00
-
-  while (startTime.getUTCHours() < 20) { // Generovat až do 19:45
-    const endTime = new Date(startTime.getTime());
-    endTime.setUTCMinutes(startTime.getUTCMinutes() + 45);
-
-    const timeslot = {
-      value: `${format(startTime, "HH:mm")} - ${format(endTime, "HH:mm")}`,
-      label: `${format(startTime, "HH:mm")} - ${format(endTime, "HH:mm")}`
-    };
-    timeslots.push(timeslot);
-
-    startTime.setUTCMinutes(startTime.getUTCMinutes() + 60);
-  }
-  return timeslots;
-}
-
 export default function Page({data}: {data: any}) {
   const [date, setDate] = useState<Date>();
   const [timeslots, setTimeslots] = useState<Timeslot[]>([]); 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const generatedTimeslots = generateTimeslots();
-  //       setTimeslots(generatedTimeslots);
-  //     } catch (error) {
-  //       console.error('Chyba při načítání dat:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [date]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let formatedDate;
+      if (date) {
+        formatedDate = new Date(date.toString().replace(/(\d{2})\w{2},/, '$1,'));
+        formatedDate.setUTCDate(formatedDate.getUTCDate() + 1);
+        formatedDate.setUTCHours(0, 0, 0, 0);
+        formatedDate = formatedDate.toISOString();
+        const fetchedData = await generateTimeSlot(formatedDate, data.uuid);
+        setTimeslots(fetchedData)
+      }
+    };
+    fetchData();
+  }, [date]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -92,7 +76,7 @@ export default function Page({data}: {data: any}) {
   return (
     <div className="flex flex-col gap-4 py-4">
     <Form {...form}>
-        <FormField
+          <FormField
             control={form.control}
             name="first_name"
             render={({ field }) => (
@@ -146,7 +130,7 @@ export default function Page({data}: {data: any}) {
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="0" />
+                        <RadioGroupItem value="offline" />
                       </FormControl>
                       <FormLabel className="font-normal">
                         Prezenčně
@@ -154,7 +138,7 @@ export default function Page({data}: {data: any}) {
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="1" />
+                        <RadioGroupItem value="online" />
                       </FormControl>
                       <FormLabel className="font-normal">
                         Online
@@ -210,6 +194,7 @@ export default function Page({data}: {data: any}) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Čas</FormLabel>
+              <input name="timeSlot" type="hidden" value={field.value} />
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -231,6 +216,19 @@ export default function Page({data}: {data: any}) {
             </FormItem>
           )}
         />
+        <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Zpráva</FormLabel>
+                <FormControl>
+                  <Textarea name="message" className="resize-none" placeholder="Sem napište zpráva pro lektora" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
       </Form>
       </div>
   )

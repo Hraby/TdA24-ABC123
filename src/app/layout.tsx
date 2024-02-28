@@ -3,7 +3,7 @@ import "./layout.css"
 import "./global.css"
 
 export const metadata: Metadata = {
-  title: 'Špičkový učitelé na dosah - Teacher digital Agency'
+  title: 'Špičkoví učitelé na dosah - Teacher digital Agency'
 }
 
 export default function RootLayout({

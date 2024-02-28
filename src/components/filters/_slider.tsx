@@ -15,9 +15,9 @@ import { Slider } from "@/components/ui/slider"
 
 type SliderProps = React.ComponentProps<typeof Slider>
 
-export default function Component({name, data}: {name: string, data:  any}) {
-    const [sliderValue, setSliderValue] = React.useState([100]);
-    const [value, setValue] = React.useState(Math.floor(Math.max(...data)));
+export default function Component({name, data, params}: {name: string, data: any, params?: any}) {
+    const [sliderValue, setSliderValue] = React.useState(params ? [Math.floor(params/Math.max(...data)*100)] : [100]);
+    const [value, setValue] = React.useState(params ? Math.floor(params) : Math.max(...data));
 
     const handleValue = (value: any) => {
         const priceValue = Math.floor(Math.max(...data)/100*value);

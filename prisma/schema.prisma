@@ -23,12 +23,17 @@ model Lecturer {
   price_per_hour Int?
   contact        Contact_info? @relation(fields: [contact_infoId], references: [id])
   contact_infoId Int?
+  Reservation    Reservation[]
+  password       String?
+  username       String?       @unique
 }
 
 model Tag {
-  uuid      String     @id @unique @default(uuid())
-  name      String     @unique
-  lecturers Lecturer[] @relation("LecturerTag")
+  uuid          String       @id @unique @default(uuid())
+  name          String       @unique
+  lecturers     Lecturer[]   @relation("LecturerTag")
+  Reservation   Reservation? @relation(fields: [reservationId], references: [id])
+  reservationId Int?
 }
 
 model Contact_info {
@@ -36,4 +41,21 @@ model Contact_info {
   telephone_numbers String?
   emails            String?
   Lecturer          Lecturer[]
+}
+
+model Reservation {
+  id            Int      @id @default(autoincrement())
+  lecturer      Lecturer @relation(fields: [lecturer_uuid], references: [uuid])
+  lecturer_uuid String
+  first_name    String
+  last_name     String
+  phone_number  String?
+  email         String
+  date          DateTime
+  timeSlot      String
+  createdAt     DateTime @default(now())
+  message       String?
+  form          Boolean // 0 - Prezencne, 1 - Online
+  status        Boolean  @default(true) // 0 - Zruseno, 1 - Rezervovano
+  tags          Tag[]
 }

@@ -39,33 +39,17 @@ export function LoginForm() {
 
     const { username: username, password: password } = data;
 
-    const response: any = await signIn("credentials", {
-        username,
-        password,
-        callbackUrl: "/dashboard",
-        redirect: false,
+    const response = await fetch("/api/login", {
+        body: JSON.stringify({username,password}),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': "Basic " + btoa("TdA"+":"+"d8Ef6!dGG_pv"), 
+        },
     });
 
-    // try {
-    //     const response: any = await signIn("credentials", {
-    //       username,
-    //       password,
-    //       redirect: false,
-    //     });
-    //     if (!response?.error) {
-    //       router.push("/");
-    //       router.refresh();
-    //     }
-  
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     console.log("Login Successful", response);
-    //     toast({ title: "Login Successful" });
-    //   } catch (error: any) {
-    //     console.error("Login Failed:", error.message);
-    //     toast({ title: "Login Failed", description: error.message });
-    //   }
+    await response;
+
     };
 
   return (

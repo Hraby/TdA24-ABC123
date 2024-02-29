@@ -11,23 +11,23 @@ export function middleware(request: NextRequest){
     const response = NextResponse.next()
     response.headers.set("Content-Type", "application/json")
 
-    // const basicAuth = request.headers.get("authorization");
-    // const url = request.nextUrl;
+    const basicAuth = request.headers.get("authorization");
+    const url = request.nextUrl;
 
-    // if (basicAuth) {
-    //     const authValue = basicAuth.split(" ")[1];
+    if (basicAuth) {
+        const authValue = basicAuth.split(" ")[1];
     
-    //     const [username, pwd] = atob(authValue).split(":");
+        const [username, pwd] = atob(authValue).split(":");
     
-    //     const user = findUserByUsername(username);
+        const user = findUserByUsername(username);
     
-    //     if (user && pwd === user.password) {
-    //       return response;
-    //     }
-    // }
+        if (user && pwd === user.password) {
+          return response;
+        }
+    }
 
-    // url.pathname = "/api/auth";
-    // return NextResponse.rewrite(url);
+    url.pathname = "/api/auth";
+    return NextResponse.rewrite(url);
 }
 
 export const config = {

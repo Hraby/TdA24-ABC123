@@ -1,24 +1,35 @@
 import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer/footer";
-import {LoginForm} from "@/components/login/login";
-import { Button } from "@/components/ui/button";
+import { LoginForm } from "@/components/login/login";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import config from '@/config.js';
 
-export default async function Page() {
-  // const session = await getSession();
-  const submit = async (formData: FormData) =>{
-    "use server";
-    const res = await fetch(config.apiUrl+"/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: formData.get("username"),
-        password: formData.get("password")
-      }),
-    });
-    await res;
-    console.log({res})
-    redirect("/dashboard");
+
+export default async function Page({ params }: any ) {
+  // const submit = async (formData: FormData) =>{
+  //   "use server";
+
+  //   const callbackUrl = params.get("callbackUrl") || "/profile";
+  //   const res = await fetch("/api/auth/login", {
+  //     method: "POST",
+  //     body: {
+  //       username: formData.get("username"),
+  //       password: formData.get("password"),
+  //     },
+  //     headers: {
+  //       'Authorization': "Basic " + btoa("TdA"+":"+"d8Ef6!dGG_pv"),
+  //       'Content-Type': 'application/json',
+  //     },
+  //     callbackUrl,
+  //   });
+  //   await res;
+  //   console.log({res})
+  //   redirect("/dashboard");
+  // }
+
+  const session = await getServerSession();
+  if (session) {
+    redirect("/");
   }
 
   return(
@@ -29,12 +40,7 @@ export default async function Page() {
       <div className="section">
         <div className="login">
           <h1>Lektorská zóna </h1>
-          <form action={submit}>
             <LoginForm />
-            <Button type="submit">
-              Přihlásit se
-            </Button>
-          </form>
         </div>
       </div>
       <div className="section">

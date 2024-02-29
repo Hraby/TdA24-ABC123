@@ -38,9 +38,13 @@ export default function Lecturer({ data }: { data: any }){
         const message = formData.get("message");
         let formatedDate;
         if (date) {
-            formatedDate = new Date(date.toString().replace(/(\d{2})\w{2},/, '$1,'));
-            formatedDate.setUTCDate(formatedDate.getUTCDate() + 1);
-            formatedDate.setUTCHours(0, 0, 0, 0);
+            const parts = date.toString().split('/');
+            const month = parseInt(parts[0], 10);
+            const day = parseInt(parts[1], 10);
+            const year = parseInt(parts[2], 10);
+            const parsedDate = new Date(year, month - 1, day + 1);
+            parsedDate.setUTCHours(0, 0, 0, 0);
+            formatedDate = parsedDate.toISOString();
         }
         const data = {lecturer_uuid: uuid,first_name: first_name, last_name: last_name, email: email, form: form, date: formatedDate, timeSlot: timeSlot, phone_number: phone_number, message: message};
         await addReservation(data);

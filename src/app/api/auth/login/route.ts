@@ -1,19 +1,20 @@
 import { prisma } from "@/db";
 import bcrypt from "bcryptjs";
-import config from "@/configjs";
+import config from "@/config";
 import * as jose from "jose";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request){
     const body = await request.json();
     const {username, password} = body;
 
-    const user = prisma.lecturer.findFirst({
+    const lecturer: any = prisma.lecturer.findFirst({
         where: {
-            username: username
+            username,
         },
     });
 
-    const isCorrectPassword = bcrypt.compareSync(password, username.password);
+    // const isCorrectPassword = bcrypt.compareSync(password, username.password);
 
     const secret = new TextEncoder().encode(config.JWT_SECRET);
     const alg = "HS256";
@@ -21,8 +22,8 @@ export async function POST(request: Request){
     const jwt = await new jose.SignJWT({})
     .setProtectedHeader({ alg })
     .setExpirationTime("72h")
-    .setSubject(user.id.toString())
+    .setSubject(lecturer.uuid)
     .sign(secret);
 
-    return Response.json({ token: jwt });
+    return NextResponse.json({ token: jwt });
 }

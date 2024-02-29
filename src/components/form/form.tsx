@@ -47,6 +47,7 @@ export default function Page({data}: {data: any}) {
         formatedDate.setUTCDate(formatedDate.getUTCDate() + 1);
         formatedDate.setUTCHours(0, 0, 0, 0);
         formatedDate = formatedDate.toISOString();
+        console.log(formatedDate)
         const fetchedData = await generateTimeSlot(formatedDate, data.uuid);
         setTimeslots(fetchedData)
       }
@@ -152,7 +153,7 @@ export default function Page({data}: {data: any}) {
           />
               <FormItem className="flex flex-col">
                 <FormLabel>Datum</FormLabel>
-                <input name="day" type="hidden" value={date ? format(date, "PPP") : ""} />
+                <input name="day" type="hidden" value={date ? format(date, "P") : ""} />
                 <Popover>
                   <PopoverTrigger asChild name="dob">
                     <FormControl>
@@ -165,7 +166,7 @@ export default function Page({data}: {data: any}) {
                         )}
                       >
                         {date ? (
-                          format(date, "PPP")
+                          format(date, "P")
                         ) : (
                           <span>Vyberte datum</span>
                         )}

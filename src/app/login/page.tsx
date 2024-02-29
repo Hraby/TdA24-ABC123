@@ -1,36 +1,14 @@
+"use client";
+
 import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer/footer";
 import { LoginForm } from "@/components/login/login";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import {useFormState} from "react-dom";
+import loginAction from "./loginAction";
 
 
-export default async function Page({ params }: any ) {
-  // const submit = async (formData: FormData) =>{
-  //   "use server";
-
-  //   const callbackUrl = params.get("callbackUrl") || "/profile";
-  //   const res = await fetch("/api/auth/login", {
-  //     method: "POST",
-  //     body: {
-  //       username: formData.get("username"),
-  //       password: formData.get("password"),
-  //     },
-  //     headers: {
-  //       'Authorization': "Basic " + btoa("TdA"+":"+"d8Ef6!dGG_pv"),
-  //       'Content-Type': 'application/json',
-  //     },
-  //     callbackUrl,
-  //   });
-  //   await res;
-  //   console.log({res})
-  //   redirect("/dashboard");
-  // }
-
-  const session = await getServerSession();
-  if (session) {
-    redirect("/");
-  }
+export default function Page() {
+  const [error, formAction] = useFormState(loginAction, undefined);
 
   return(
     <>
@@ -40,7 +18,10 @@ export default async function Page({ params }: any ) {
       <div className="section">
         <div className="login">
           <h1>Lektorská zóna </h1>
+          <form className="form" action={formAction}>
             <LoginForm />
+          </form>
+          {error && <p>{error}</p>}
         </div>
       </div>
       <div className="section">

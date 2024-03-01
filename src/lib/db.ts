@@ -1,8 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import { SignJWT, jwtVerify } from "jose";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma"
+import { format, getTime } from "date-fns";
+import config from "@/config";
+import * as jose from "jose";
+
 
 export async function getLecturers(params: any) {
   const filter: any = {};
@@ -198,64 +200,125 @@ export async function updateLecturer(data: any, uuid: string){
   return updatedLecturer
 }
 
+export async function getReservations(params?: any){
+  const filter: any = {};
+  if (params){
+    if (params.uuid) filter.lecturer_uuid = { contains: params.uuid };
+    if (params.date) filter.date = { equals: params.date };
+  }
+
+  const reservations = await prisma.reservation.findMany({
+    where: filter,
+    include: {
+      lecturer: {
+        select: {
+          uuid: true,
+          title_before: true,
+          first_name: true,
+          middle_name: true,
+          last_name: true,
+          title_after: true,
+          picture_url: true,
+          location: true,
+          claim: true,
+          bio: true,
+          price_per_hour: true,
+          contact_infoId: true,
+          password: false,
+          username: false
+        }
+      },
+      tags: true
+    },
+  })
+
+  return reservations;
+}
+
+export async function addReservation(data: any){
+  const reservation = await prisma.reservation.create({
+    data: {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone_number: data.phone_number,
+      email: data.email,
+      date: data.date,
+      timeSlot: data.timeSlot,
+      form: data.form,
+      message: data.message,
+      lecturer: {
+        connect: { uuid: data.lecturer_uuid }
+      }
+    }
+  });
+  return reservation;
+}
+
 export async function getTimeSlot(date: any, uuid: string){
-  const timeSlot = await prisma.reservation.findMany({
+  const existingTimeslots = await prisma.reservation.findMany({
     where: {lecturer_uuid: uuid, date: date}
   })
-  return timeSlot
+  return existingTimeslots;
 }
 
-const secretKey = "secret";
-const key = new TextEncoder().encode(secretKey);
+export async function generateTimeSlot(date: any, uuid: string){
+  const reservations = await fetch(`/api/reservations?uuid=${uuid}&date=${date}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': "Basic " + btoa("TdA"+":"+"d8Ef6!dGG_pv"),
+      'Content-Type': 'application/json',
+    },
+  })
+  const data = await reservations.json();
 
-export async function encrypt(payload: any) {
-  return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("10 sec from now")
-    .sign(key);
-}
+  function generateTimeslots() {
+    const timeslots = [];
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0);
+  
+    while (startTime.getHours() < 20) {
+      const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+  
+      const timeslot = {
+        value: `${format(startTime, "HH:mm")} - ${format(endTime, "HH:mm")}`,
+        label: `${format(startTime, "HH:mm")} - ${format(endTime, "HH:mm")}`
+      };
+      timeslots.push(timeslot);
+  
+      startTime.setHours(startTime.getHours() + 1);
+    }
+    return timeslots;
+  }
 
-export async function decrypt(input: string): Promise<any> {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
+  const existingTimeslots = data.map((reservation: any) => reservation.timeSlot);
+
+  const generatedTimeslots = generateTimeslots().filter(timeslot => {
+    return !existingTimeslots.includes(timeslot.value);
   });
-  return payload;
+
+  return generatedTimeslots;
 }
 
-export async function login({ username, password}: {username: string, password: string}) {
-  const lecturer = { username, password};
-  console.log(lecturer)
-  const expires = new Date(Date.now() + 10 * 1000);
-  const session = await encrypt({ lecturer, expires });
+export async function getUser(username: any){
+  const lecturer = await prisma.lecturer.findUnique({
+    where: {
+      username: username,
+    },
+  })
+  
+  if(lecturer){
+    const secret = new TextEncoder().encode(config.JWT_SECRET);
+    const alg = "HS256";
 
-  cookies().set("session", session, { expires, httpOnly: true });
-}
+    const jwt = await new jose.SignJWT({})
+    .setProtectedHeader({ alg })
+    .setExpirationTime("1d")
+    .setSubject(lecturer.uuid.toString())
+    .setIssuer(lecturer.uuid.toString())
+    .sign(secret);
 
-export async function logout() {
-  // Destroy the session
-  cookies().set("session", "", { expires: new Date(0) });
-}
+    return NextResponse.json({token: jwt}, {status: 200});
+  }
 
-export async function getSession() {
-  const session = cookies().get("session")?.value;
-  if (!session) return null;
-  return await decrypt(session);
-}
-
-export async function updateSession(request: NextRequest) {
-  const session = request.cookies.get("session")?.value;
-  if (!session) return;
-
-  // Refresh the session so it doesn't expire
-  const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 10 * 1000);
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "session",
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-  return res;
+  return null
 }

@@ -1,25 +1,14 @@
+"use client";
+
 import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer/footer";
-import {LoginForm} from "@/components/login/login";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
-import config from '@/config.js';
+import { LoginForm } from "@/components/login/login";
+import {useFormState} from "react-dom";
+import loginAction from "./formAction";
 
-export default async function Page() {
-  // const session = await getSession();
-  const submit = async (formData: FormData) =>{
-    "use server";
-    const res = await fetch(config.apiUrl+"/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        username: formData.get("username"),
-        password: formData.get("password")
-      }),
-    });
-    await res;
-    console.log({res})
-    redirect("/dashboard");
-  }
+
+export default function Page() {
+  const [error, formAction] = useFormState(loginAction, undefined);
 
   return(
     <>
@@ -29,11 +18,10 @@ export default async function Page() {
       <div className="section">
         <div className="login">
           <h1>Lektorská zóna </h1>
-          <form action={submit}>
+          <form className="form" action={formAction}>
+            <p></p>
             <LoginForm />
-            <Button type="submit">
-              Přihlásit se
-            </Button>
+            {error && <p className="text-red-600">* {error}</p>}
           </form>
         </div>
       </div>

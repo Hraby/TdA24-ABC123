@@ -1,181 +1,202 @@
+"use client"
+import React from 'react';
 import "./dashboard.css";
 import Stats from "@/components/stats/stats";
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Button} from "@/components/ui/button";
+import createEvent from "ical-generator";
+import { getServerSession } from 'next-auth';
+import { cookies } from 'next/headers';
 
-export default function Dashboard(){
-    return (
-        <div className="dashboard">
-            <h1>Lektorská zóna</h1>
-            <div className="w-full flex justify-between">
-                <Stats icon="/people.png" name="Počet studentů" data="5" time={true}/>
-                <Stats icon="/clock.png" name="Nejoblíbenější časy" data="8-11" time={true}/>
-                <Stats icon="/star.png" name="Hodnocení" data="100%" time={false}/>
-            </div>
-            <section className="w-full pb-8" >
-                <div className='flex justify-between items-center'>
-					<h1 className='text-lg font-medium'>Rezervace</h1>
-					<Button
-						className='px-2 py-1 bg-cyan-800 hover:bg-cyan-900 text-white rounded-lg flex items-center space-x-2 text-sm'
-						type='button'
-					>
-						<svg
-							className=' w-4 h-4'
-							fill='none'
-							height='24'
-							stroke='currentColor'
-							strokeLinecap='round'
-							strokeLinejoin='round'
-							strokeWidth='2'
-							viewBox='0 0 24 24'
-							width='24'
-							xmlns='http://www.w3.org/2000/svg'
+function icalDate(rawDate: any, timeSlot: any){
+	const date = new Date(rawDate);
+	const [startTime, endTime] = timeSlot.split(" - ");
+	const day = date.getDate().toString().padStart(2, '0'); 
+	const month = (date.getMonth() + 1).toString().padStart(2, '0');
+	const year = date.getFullYear();
+	const startDate = new Date(`${year}-${month}-${day}T${startTime}`);
+	const endDate = new Date(`${year}-${month}-${day}T${endTime}`);
+	return [startDate, endDate];
+}
+
+
+export default function Dashboard({data, lecturer}: {data: any, lecturer: any}){
+	const filteredReservations = data.filter((reservation: any) => {
+		return reservation.lecturer_uuid === lecturer.uuid;
+	});
+	const reservationsCount = filteredReservations.length;
+
+	const beReservations = data.filter((reservation: any) => {
+		return new Date(reservation.date) < new Date() && reservation.lecturer_uuid === lecturer.uuid;
+	});
+	
+	const upReservations = data.filter((reservation: any) => {
+		return new Date(reservation.date) >= new Date() && reservation.lecturer_uuid === lecturer.uuid;
+	});
+
+	const timeslotCounts: { [key: string]: number } = {};
+
+	filteredReservations.forEach((reservation: any) => {
+		const timeslot = reservation.timeSlot;
+		timeslotCounts[timeslot] = (timeslotCounts[timeslot] || 0) + 1;
+	});
+
+	let mostFrequentTimeslot = "";
+	let maxCount = 0;
+	for (const timeslot in timeslotCounts) {
+		if (timeslotCounts[timeslot] > maxCount) {
+			maxCount = timeslotCounts[timeslot];
+			mostFrequentTimeslot = timeslot;
+		}
+	}
+	
+	function formatDate(rawDate: any){
+		const date = new Date(rawDate);
+		const day = date.getDate().toString().padStart(2, '0'); 
+		const month = (date.getMonth() + 1).toString().padStart(2, '0');
+		const year = date.getFullYear();
+		const formattedDate = `${day}.${month}.${year}`;
+		return formattedDate;
+	}
+
+	async function exportToIcal(reservation: any[]){
+		const cal = createEvent();
+
+		upReservations.forEach((reservation: any) => {
+			const [startDate, endDate] = icalDate(reservation.date, reservation.timeSlot);
+
+			cal.createEvent({
+				start: startDate,
+				end: endDate,
+				summary: `Rezervace - ${reservation.first_name} ${reservation.last_name}`,
+				description: reservation.message,
+				location: reservation.form,
+				organizer: {
+					name: `${reservation.first_name} ${reservation.last_name}`,
+					email: reservation.email
+				}
+
+			});
+		});
+
+		const calContent = cal.toString();
+		const blob = new Blob([calContent], { type: 'text/calendar' });
+		const url = window.URL.createObjectURL(blob);
+		const link = document.createElement('a');
+		link.href = url;
+		link.setAttribute('download', 'reservations.ics');
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		window.URL.revokeObjectURL(url);
+	}
+
+	return (
+		<div className="dashboard">
+			<div className="flex flex-row justify-between items-center">
+				<h1>Lektorská zóna - {lecturer.first_name} {lecturer.last_name}</h1>
+			</div>
+			<div className="w-full flex gap-20">
+				<Stats icon="/people.png" name="Nadcházející počet studentů" data={upReservations == 0 ? "Nikdo :(" : upReservations} time={false}/>
+				<Stats icon="/clock.png" name="Nejoblíbenější časy" data={mostFrequentTimeslot} time={false}/>
+			</div>
+			<section className="w-full pb-8" >
+				<div className='flex justify-between items-center'>
+					<h1 className='text-lg font-medium'>Naplánované hodiny</h1>
+						<input type="hidden" name="reservations" value={JSON.stringify(upReservations)} />
+						<Button
+							className='px-2 py-1 bg-cyan-800 hover:bg-cyan-900 text-white rounded-lg flex items-center space-x-2 text-sm'
+							type='submit'
+							onClick={() => exportToIcal(upReservations)}
+							disabled={upReservations.length === 0}
 						>
-							<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
-							<polyline points='7 10 12 15 17 10' />
-							<line x1='12' x2='12' y1='15' y2='3' />
-						</svg>
-						<span>Exportovat</span>
-					</Button>
+							<svg
+								className=' w-4 h-4'
+								fill='none'
+								height='24'
+								stroke='currentColor'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth='2'
+								viewBox='0 0 24 24'
+								width='24'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
+								<polyline points='7 10 12 15 17 10' />
+								<line x1='12' x2='12' y1='15' y2='3' />
+							</svg>
+							<span>Exportovat (.ics)</span>
+						</Button>
 				</div>
+				{upReservations.length === 0 ? <p>Nebyly nalezeny žádné záznamy</p> : (
 				<Table>
 					<TableHeader>
 						<TableRow>
 							<TableHead>Jméno a Přijmení</TableHead>
 							<TableHead>Email</TableHead>
-							<TableHead>Tagy</TableHead>
-                            <TableHead>Forma</TableHead>
-                            <TableHead>Datum</TableHead>
-                            <TableHead>Čas</TableHead>
+							<TableHead>Zpráva</TableHead>
+							<TableHead>Forma</TableHead>
+							<TableHead>Datum</TableHead>
+							<TableHead>Čas</TableHead>
 							<TableHead className="text-right"/>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						<TableRow>
-							<TableCell>Test Test</TableCell>
-							<TableCell>test@email.cz</TableCell>
-							<TableCell>
-								<span className='px-2 py-1 bg-red-200 text-red-800 rounded-md'>
-									<svg
-										className=' w-4 h-4 inline-block mr-1'
-										fill='none'
-										height='24'
-										stroke='currentColor'
-										strokeLinecap='round'
-										strokeLinejoin='round'
-										strokeWidth='2'
-										viewBox='0 0 24 24'
-										width='24'
-										xmlns='http://www.w3.org/2000/svg'
-									>
-										<path d='M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z' />
-										<path d='M7 7h.01' />
-									</svg>
-									Office
-								</span>
-							</TableCell>
-                            <TableCell>Prezenčně</TableCell>
-                            <TableCell>01.03.2024</TableCell>
-                            <TableCell>15:00 - 16:00</TableCell>
-							<TableCell className="text-right">
-								<Popover>
-									<PopoverTrigger>
-										<Button
-											className='px-2 py-1 bg-transparent text-black hover:bg-gray-200 active:bg-gray-300 rounded'
-											type='button'
-										>
-											<svg
-												className=' w-4 h-4'
-												fill='none'
-												height='24'
-												stroke='currentColor'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth='2'
-												viewBox='0 0 24 24'
-												width='24'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<circle cx='12' cy='12' r='1' />
-												<circle cx='12' cy='5' r='1' />
-												<circle cx='12' cy='19' r='1' />
-											</svg>
-										</Button>
-									</PopoverTrigger>
-									<PopoverContent className='w-40'>
-										<button className='w-full flex items-center space-x-2 hover:bg-gray-200 active:bg-gray-300 py-2 px-2 rounded-lg text-gray-500'>
-											<svg
-												className=' w-4 h-4'
-												fill='none'
-												height='24'
-												stroke='currentColor'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth='2'
-												viewBox='0 0 24 24'
-												width='24'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<path d='M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5' />
-												<polyline points='14 2 14 8 20 8' />
-												<path d='M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z' />
-											</svg>
-											<span className='text-sm font-medium'>Edit</span>
-										</button>
-										<button className='w-full flex items-center space-x-2 hover:bg-gray-200 active:bg-gray-300 py-2 px-2 rounded-lg text-gray-500'>
-											<svg
-												className=' w-4 h-4'
-												fill='none'
-												height='24'
-												stroke='currentColor'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth='2'
-												viewBox='0 0 24 24'
-												width='24'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
-												<polyline points='16 6 12 2 8 6' />
-												<line x1='12' x2='12' y1='2' y2='15' />
-											</svg>
-											<span className='text-sm font-medium'>Share</span>
-										</button>
-										<button className='w-full flex items-center space-x-2 hover:bg-gray-200 active:bg-gray-300 py-2 px-2 rounded-lg text-gray-500'>
-											<svg
-												className=' w-4 h-4'
-												fill='none'
-												height='24'
-												stroke='currentColor'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												strokeWidth='2'
-												viewBox='0 0 24 24'
-												width='24'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<path d='M20 5H9l-7 7 7 7h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z' />
-												<line x1='18' x2='12' y1='9' y2='15' />
-												<line x1='12' x2='18' y1='9' y2='15' />
-											</svg>
-											<span className='text-sm font-medium'>Delete</span>
-										</button>
-									</PopoverContent>
-								</Popover>
-							</TableCell>
+					{upReservations.map((reservation: any, index:number) =>(
+						<TableRow key={index}>
+								<TableCell>{reservation.first_name} {reservation.last_name}</TableCell>
+								<TableCell>{reservation.email}</TableCell>
+								<TableCell>{reservation.message}</TableCell>
+								<TableCell>{reservation.form == "online" ? "Online" : "Prezenčně"}</TableCell>
+								<TableCell>{formatDate(reservation.date)}</TableCell>
+								<TableCell>{reservation.timeSlot}</TableCell>
 						</TableRow>
-                    </TableBody>
-                </Table>
-		    </section>
-        </div>
-    )
+					))}
+					</TableBody>
+				</Table>
+				)}
+			</section>
+			<section className="w-full pb-8" >
+				<div className='flex justify-between items-center'>
+					<h1 className='text-lg font-medium'>Uplynulé hodiny</h1>
+				</div>
+				{beReservations.length === 0 ? <p>Nebyly nalezeny žádné záznamy</p> : (
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Jméno a Přijmení</TableHead>
+							<TableHead>Email</TableHead>
+							<TableHead>Zpráva</TableHead>
+							<TableHead>Forma</TableHead>
+							<TableHead>Datum</TableHead>
+							<TableHead>Čas</TableHead>
+							<TableHead className="text-right"/>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+					{beReservations.map((reservation: any, index:number) =>(
+						<TableRow key={index}>
+								<TableCell>{reservation.first_name} {reservation.last_name}</TableCell>
+								<TableCell>{reservation.email}</TableCell>
+								<TableCell>{reservation.message}</TableCell>
+								<TableCell>{reservation.form == "online" ? "Online" : "Prezenčně"}</TableCell>
+								<TableCell>{formatDate(reservation.date)}</TableCell>
+								<TableCell>{reservation.timeSlot}</TableCell>
+						</TableRow>
+					))}
+					</TableBody>
+				</Table>
+				)}
+			</section>
+		</div>
+	)
 }

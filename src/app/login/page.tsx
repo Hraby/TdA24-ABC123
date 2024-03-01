@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer/footer";
 import { LoginForm } from "@/components/login/login";
 import {useFormState} from "react-dom";
-import loginAction from "./loginAction";
+import loginAction from "./formAction";
 
 
 export default function Page() {
@@ -19,9 +19,10 @@ export default function Page() {
         <div className="login">
           <h1>Lektorská zóna </h1>
           <form className="form" action={formAction}>
+            <p></p>
             <LoginForm />
+            {error && <p className="text-red-600">* {error}</p>}
           </form>
-          {error && <p>{error}</p>}
         </div>
       </div>
       <div className="section">

@@ -2,6 +2,9 @@ import { SignJWT, jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma"
 import { format, getTime } from "date-fns";
+import config from "@/config";
+import * as jose from "jose";
+
 
 export async function getLecturers(params: any) {
   const filter: any = {};
@@ -197,10 +200,12 @@ export async function updateLecturer(data: any, uuid: string){
   return updatedLecturer
 }
 
-export async function getReservations(params: any){
+export async function getReservations(params?: any){
   const filter: any = {};
-  if (params.uuid) filter.lecturer_uuid = { contains: params.uuid };
-  if (params.date) filter.date = { equals: params.date };
+  if (params){
+    if (params.uuid) filter.lecturer_uuid = { contains: params.uuid };
+    if (params.date) filter.date = { equals: params.date };
+  }
 
   const reservations = await prisma.reservation.findMany({
     where: filter,
@@ -292,4 +297,28 @@ export async function generateTimeSlot(date: any, uuid: string){
   });
 
   return generatedTimeslots;
+}
+
+export async function getUser(username: any){
+  const lecturer = await prisma.lecturer.findUnique({
+    where: {
+      username: username,
+    },
+  })
+  
+  if(lecturer){
+    const secret = new TextEncoder().encode(config.JWT_SECRET);
+    const alg = "HS256";
+
+    const jwt = await new jose.SignJWT({})
+    .setProtectedHeader({ alg })
+    .setExpirationTime("1d")
+    .setSubject(lecturer.uuid.toString())
+    .setIssuer(lecturer.uuid.toString())
+    .sign(secret);
+
+    return NextResponse.json({token: jwt}, {status: 200});
+  }
+
+  return null
 }

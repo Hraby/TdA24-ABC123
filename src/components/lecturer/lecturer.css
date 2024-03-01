@@ -13,6 +13,11 @@
     justify-content: center;
 }
 
+.formLecturer{
+    max-width: 1200Px;
+    width: 100%;
+}
+
 .lecturer{
     max-width: 1200px;
     width: 100%;
@@ -50,16 +55,17 @@
 
 .lecturer-more{
     display: flex;
-    justify-content: space-between;
+    gap: 150px;
     align-items: center;
     padding-top: 25px;
+    max-width: 1200px;
+    width: 100%;
 }
 
 .lecturer-info{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 800px;
 }
 
 .lecturer-img{

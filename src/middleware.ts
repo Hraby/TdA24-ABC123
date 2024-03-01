@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest){
         const response = NextResponse.next()
         response.headers.set("Content-Type", "application/json")
 
-        const basicAuth = request.headers.get("authorization");
+        const basicAuth = request.headers.get("Authorization");
         const url = request.nextUrl;
 
         if (basicAuth) {

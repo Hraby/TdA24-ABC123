@@ -90,7 +90,9 @@ export default function Lecturer({ data }: { data: any }){
                         </div>
                     </div>
                     <Dialog>
-                        <DialogTrigger className="w-max">Domluvit si schůzku</DialogTrigger>
+                        <div className="lecturer-reservation">
+                            <DialogTrigger className="w-max">Domluvit si schůzku</DialogTrigger>
+                        </div>
                         <DialogContent>
                             <DialogHeader>
                             <DialogTitle>Objednávka hodiny - {data.first_name} {data.last_name}</DialogTitle>

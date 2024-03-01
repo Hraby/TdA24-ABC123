@@ -134,3 +134,21 @@
     font-weight: 400;
     line-height: normal;
 }
+
+.lecturer-reservation {
+    display: inline-block;
+}
+
+.lecturer-reservation .w-max {
+    background-color: #15374C;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.lecturer-reservation .w-max:hover {
+    background-color: lightblue;
+    color: white;
+}
